@@ -17,6 +17,7 @@ DEFAULT_OPTIONS = {
     "whisper_server_url": "http://localhost:8000",
     "whisper_model": "Systran/faster-whisper-small",
     "language": "ko",
+    "detect_songs": True,
 }
 
 

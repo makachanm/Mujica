@@ -36,6 +36,7 @@ def collect_settings(option_values):
         "whisper_server_url": raw["whisper_server_url"].strip(),
         "whisper_model": raw["whisper_model"].strip(),
         "language": raw["language"].strip(),
+        "detect_songs": bool(raw["detect_songs"]),
     }
 
 
@@ -128,8 +129,12 @@ def build_options_panel():
         gr.Markdown("**에이전트**")
         ollama_url = gr.Textbox(label="Ollama 서버 주소", value=initial["ollama_url"])
         with gr.Row():
-            agent_model = gr.Textbox(label="에이전트 모델 (도구 호출 지원)", value=initial["agent_model"])
-            vision_model = gr.Textbox(label="비전 모델 (이미지 입력 지원)", value=initial["vision_model"])
+            agent_model = gr.Textbox(
+                label="에이전트 모델 (도구 호출 지원, claude- 로 시작하면 Claude API)", value=initial["agent_model"],
+            )
+            vision_model = gr.Textbox(
+                label="비전 모델 (이미지 입력 지원, claude- 로 시작하면 Claude API)", value=initial["vision_model"],
+            )
         agent_count = gr.Slider(
             label="에이전트 수 (= 영상을 나눌 조각 수)",
             minimum=1, maximum=16, step=1,
@@ -163,11 +168,16 @@ def build_options_panel():
                 allow_custom_value=True,
                 value=initial["language"],
             )
+        detect_songs = gr.Checkbox(
+            label="노래·음악 구간 감지 (가사는 받아쓰지 않고 윈도우에 표시, torch 필요)",
+            value=initial["detect_songs"],
+        )
 
         option_inputs = [
             ollama_url, agent_model, vision_model,
             agent_count, window_seconds, frames_per_look,
             whisper_server_url, whisper_model, language,
+            detect_songs,
         ]
 
         with gr.Row():

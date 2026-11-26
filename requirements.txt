@@ -2,3 +2,10 @@ gradio
 langchain
 langchain-ollama
 httpx
+# 노래·음악 구간 감지 (addon/song_detect.py). GPU가 없으면 CPU용 torch가 훨씬 작다:
+#   uv pip install --python .venv torch --index-url https://download.pytorch.org/whl/cpu
+numpy
+torch
+panns-inference
+# Claude API (모델 이름이 claude- 로 시작할 때)
+anthropic
