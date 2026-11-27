@@ -219,16 +219,16 @@ def build_app():
 
         with gr.Row():
             with gr.Column():
-                gr.Markdown("## 1. 영상 업로드")
+                gr.Markdown("## 영상 원본")
                 video_input = gr.Video(label="원본 영상", sources=["upload"])
                 video_description_input = gr.Textbox(
-                    label="영상 설명 (선택): 에이전트가 이 내용을 배경으로 알고 영상을 본다",
+                    label="영상 설명 (선택, 영상에 대한 간략한 정보를 입력해주세요.):",
                     placeholder="예: 진행자 둘(토아, 캔시)이 게스트 가수를 불러 노래 퀴즈를 하는 예능 방송",
                     lines=3,
                 )
 
             with gr.Column():
-                gr.Markdown("## 2. 장면 설명")
+                gr.Markdown("## 프롬프트")
                 request_input = gr.Textbox(
                     label="찾고 싶은 장면",
                     placeholder="예: 발표자가 매출 그래프를 설명하는 부분",
@@ -238,7 +238,7 @@ def build_app():
                 find_button = gr.Button("후보 찾기", variant="primary")
                 progress_text = gr.Markdown()
 
-        gr.Markdown("## 3. 편집된 후보")
+        gr.Markdown("## 후보")
         candidate_gallery = gr.Gallery(label="후보 클립", columns=3, height="auto")
         candidate_report = gr.Markdown()
 
