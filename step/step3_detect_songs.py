@@ -21,8 +21,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from common import CACHE_DIR
 
-CACHE_DIR = Path.home() / ".cache" / "mujica"
 
 # 공식 배포처(Zenodo)가 막힌 환경이 있어 같은 파일의 Hugging Face 사본을 쓴다.
 MODEL_PATH = CACHE_DIR / "panns" / "Cnn14_32k.pth"

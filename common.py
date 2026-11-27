@@ -1,4 +1,9 @@
 import subprocess
+from pathlib import Path
+
+
+# 노래 감지 모델 가중치와 영상별 분석 결과를 둔다.
+CACHE_DIR = Path.home() / ".cache" / "mujica"
 
 
 class Window:

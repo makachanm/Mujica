@@ -4,13 +4,14 @@ Mujica 웹 화면. 영상 업로드 / 장면 설명(+옵션) / 편집된 후보,
 """
 
 import asyncio
+import shutil
 import tempfile
 from datetime import datetime
 from pathlib import Path
 
 import gradio as gr
 
-from common import format_timestamp
+from common import CACHE_DIR, format_timestamp
 from main import find_moments
 from options import DEFAULT_OPTIONS, OPTIONS_PATH, load_options, save_options
 
@@ -118,6 +119,27 @@ def save_settings(*option_values):
     return f"저장했습니다: {OPTIONS_PATH.name}"
 
 
+def clear_cache():
+    """'캐시 비우기' 버튼. 영상별 노래 감지 결과와 지난 후보 클립을 지운다. 모델 가중치는 다시 받기 무거워서 남긴다."""
+    analysis_files = sorted(CACHE_DIR.glob("*.npz"))
+    clip_folders = sorted(path for path in OUTPUTS_DIR.iterdir() if path.is_dir())
+
+    freed_bytes = 0
+    for path in analysis_files:
+        freed_bytes += path.stat().st_size
+        path.unlink()
+    for folder in clip_folders:
+        for path in folder.rglob("*"):
+            if path.is_file():
+                freed_bytes += path.stat().st_size
+        shutil.rmtree(folder)
+
+    return (
+        f"지웠습니다: 노래 감지 결과 {len(analysis_files)}개, 후보 클립 폴더 {len(clip_folders)}개 "
+        f"({freed_bytes / 1024 / 1024:.1f}MB)"
+    )
+
+
 def fill_saved_options():
     """페이지를 열 때마다 저장된 옵션을 다시 읽어 칸에 채운다."""
     return list(load_options().values())
@@ -183,8 +205,10 @@ def build_options_panel():
 
         with gr.Row():
             save_button = gr.Button("설정 저장", size="sm")
-            save_status = gr.Markdown()
-        save_button.click(fn=save_settings, inputs=option_inputs, outputs=save_status)
+            clear_button = gr.Button("캐시 비우기 (노래 감지 결과, 지난 후보 클립)", size="sm")
+        option_status = gr.Markdown()
+        save_button.click(fn=save_settings, inputs=option_inputs, outputs=option_status)
+        clear_button.click(fn=clear_cache, outputs=option_status)
 
     return option_inputs
 
