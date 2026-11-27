@@ -12,7 +12,7 @@
 | 노래 감지 | 켬 |
 | qwen | 에이전트·비전 모두 `qwen3.5:9b` (Ollama, RTX 5070 12GB) |
 | Claude | 에이전트·비전 모두 `claude-opus-5-5` (에이전트 effort medium, 비전 effort low) |
-| 프롬프트 | 두 모델 모두 `step/step5_chunk_agent.py` 의 같은 SYSTEM_PROMPT |
+| 프롬프트 | 두 모델 모두 `step/step6_chunk_agent.py` 의 같은 SYSTEM_PROMPT |
 
 ## 결과
 

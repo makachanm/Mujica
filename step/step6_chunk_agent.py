@@ -1,4 +1,5 @@
 import base64
+import json
 from pathlib import Path
 
 from langchain.agents import create_agent
@@ -6,8 +7,8 @@ from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_ollama import ChatOllama
 
+from claude_model import ClaudeModel
 from common import FoundSegment, format_timestamp
-from step.claude_models import ClaudeModel, is_claude_model
 
 
 AGENT_STEP_LIMIT = 60
@@ -55,12 +56,56 @@ SYSTEM_PROMPT = """\
 
 def create_model(model_name, ollama_url):
     """모델 이름이 claude- 로 시작하면 Claude API, 아니면 Ollama 모델을 만든다."""
-    if is_claude_model(model_name):
+    if model_name.startswith("claude-"):
         return ClaudeModel(model_name)
     return ChatOllama(model=model_name, base_url=ollama_url, num_ctx=OLLAMA_CONTEXT_LENGTH)
 
 
-def build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_text=""):
+def describe_glossary(glossary_path):
+    """
+    고유명사 사전(glossary.json)을 에이전트에게 보여 줄 글로 바꾼다. 파일이 없으면 빈 글.
+
+        {
+          "토아": ["토하"],                     정확한 표기: [받아쓰기에서 잘못 나오는 형태, ...]
+          "캔시": [],                           잘못 나오는 형태를 모르면 비워 둔다
+          "소나": {"variants": ["소나기"],      누구인지 적어 두면 에이전트가 역할을 짐작하지 않는다
+                   "note": "게스트로 나온 가수"}
+        }
+
+    받아쓰기를 일괄 치환하지 않는다 ("토하다" 같은 일반 단어가 깨진다). 에이전트가 문맥을 보고 고쳐 읽게 한다.
+    """
+    if not Path(glossary_path).exists():
+        return ""
+    glossary = json.loads(Path(glossary_path).read_text(encoding="utf-8"))
+    if len(glossary) == 0:
+        return ""
+
+    lines = [
+        "",
+        "고유명사 사전",
+        "- 아래 이름·용어는 이 영상에 나올 수 있습니다. 받아쓰기에 비슷한 소리의 단어가 나오면 문맥상 맞는 경우에만 "
+        "이 표기로 고쳐 읽으세요. 일반 단어로 쓰인 경우(예: '토하다')는 고치지 마세요.",
+        "- 설명(—)이 없는 이름은 누구인지 짐작하지 마세요. 특히 영상 속 주인공 본인이라고 단정하지 말고, "
+        "받아쓰기에 나온 대로 이름만 쓰세요.",
+    ]
+    for term, entry in glossary.items():
+        note = ""
+        variants = entry
+        if isinstance(entry, dict):
+            note = entry.get("note", "")
+            variants = entry.get("variants", [])
+
+        line = f"- {term}"
+        if note != "":
+            line += f" — {note}"
+        if len(variants) > 0:
+            line += f" (받아쓰기에서 {', '.join(repr(variant) for variant in variants)}(으)로 잘못 나올 수 있음)"
+        lines.append(line)
+
+    return "\n".join(lines)
+
+
+def build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_text):
     lines = [
         f"사용자 요청: {user_request}",
         "",
@@ -174,7 +219,7 @@ def make_tool_functions(chunk, found_segments, vision_model, frames_per_look):
 
 
 async def run_chunk_agent(agent_model, vision_model, chunk, chunk_count, user_request, frames_per_look,
-                          glossary_text=""):
+                          glossary_text):
     found_segments = []
     tool_functions = make_tool_functions(chunk, found_segments, vision_model, frames_per_look)
     briefing = build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_text)

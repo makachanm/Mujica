@@ -11,9 +11,9 @@ settings
     whisper_server_url  OpenAI 호환 받아쓰기 서버 주소
     whisper_model       받아쓰기 서버의 모델 이름
     language            받아쓰기 언어 코드
-    detect_songs        노래·음악 구간을 찾아 받아쓰기에서 빼고 윈도우에 표시할지 (addon.song_detect)
+    detect_songs        노래·음악 구간을 찾아 받아쓰기에서 빼고 윈도우에 표시할지
 
-고유명사 사전은 glossary.json 에서 읽어 에이전트 프롬프트에 넣는다 (addon/glossary.py 참고). 없으면 쓰지 않는다.
+고유명사 사전은 glossary.json 에서 읽어 에이전트에게 알려 준다. 없으면 쓰지 않는다 (step6 describe_glossary 참고).
 
 report_progress(문장, 끝났는지) 는 진행 상황을 받는 비동기 함수다.
 """
@@ -22,25 +22,27 @@ import asyncio
 import tempfile
 from pathlib import Path
 
-from addon import glossary
-from addon.whisper_segments import SegmentWhisperServer, transcribe_chunk
-
 from step.step1_probe_video import probe_video
 from step.step2_split_timeline import split_timeline
-from step.step3_extract_frames import extract_frames
-from step.step5_chunk_agent import create_model, run_chunk_agent
-from step.step6_merge_results import merge_segments
-from step.step7_cut_clips import cut_clips
+from step.step4_extract_frames import extract_frames
+from step.step5_transcribe_audio import WhisperServer, transcribe_chunk
+from step.step6_chunk_agent import create_model, describe_glossary, run_chunk_agent
+from step.step7_merge_results import merge_segments
+from step.step8_cut_clips import cut_clips
 
 
 GLOSSARY_PATH = Path(__file__).parent / "glossary.json"
 
 
 async def find_songs(video_path, has_audio, settings, report_progress):
-    if not has_audio or not settings["detect_songs"]:
-        return None
-    # torch 는 무거워서 노래 감지를 켰을 때만 불러온다
-    from addon.song_detect import detect_songs
+    no_songs = {"songs": [], "mute": []}
+    if not has_audio:
+        return no_songs
+    if not settings["detect_songs"]:
+        return no_songs
+
+    # torch 는 불러오는 데만 몇 초 걸려서, 노래 감지를 켰을 때만 불러온다.
+    from step.step3_detect_songs import detect_songs
 
     await report_progress("노래·음악 구간을 찾는 중 (처음 한 번은 모델 327MB 다운로드)", False)
     return await asyncio.to_thread(detect_songs, video_path)
@@ -53,14 +55,10 @@ async def find_moments(user_request, video_path, settings, output_dir, report_pr
     duration, has_audio = await asyncio.to_thread(probe_video, video_path)
     chunks = split_timeline(duration, chunk_count, settings["window_seconds"])
 
-    terms = glossary.load_file(GLOSSARY_PATH)
-    song_info = await find_songs(video_path, has_audio, settings, report_progress)
+    song_ranges = await find_songs(video_path, has_audio, settings, report_progress)
+    glossary_text = describe_glossary(GLOSSARY_PATH)
 
-    # 사전을 hotwords 로 보내지 않는다: Speaches + large-v3-turbo 에서 hotwords 를 주면 고유명사는 고쳐지지만
-    # 받아쓰기 일부가 통째로 빠졌다 (25초 123자 → 20자). 사전은 에이전트 프롬프트로만 쓴다.
-    whisper_server = SegmentWhisperServer(
-        settings["whisper_server_url"], settings["whisper_model"], settings["language"],
-    )
+    whisper_server = WhisperServer(settings["whisper_server_url"], settings["whisper_model"], settings["language"])
     agent_model = create_model(settings["agent_model"], settings["ollama_url"])
     vision_model = create_model(settings["vision_model"], settings["ollama_url"])
 
@@ -72,11 +70,11 @@ async def find_moments(user_request, video_path, settings, output_dir, report_pr
             await report_progress(f"조각 {chunk.number}/{chunk_count} 프레임 추출 및 받아쓰기 중", False)
             await asyncio.to_thread(extract_frames, video_path, chunk, work_dir)
             if has_audio:
-                await asyncio.to_thread(transcribe_chunk, video_path, chunk, work_dir, whisper_server, song_info)
+                await asyncio.to_thread(transcribe_chunk, video_path, chunk, work_dir, whisper_server, song_ranges)
 
             agent_run = run_chunk_agent(
                 agent_model, vision_model, chunk, chunk_count, user_request, settings["frames_per_look"],
-                glossary.prompt_block(terms),
+                glossary_text,
             )
             agent_tasks.append(asyncio.create_task(agent_run))
 

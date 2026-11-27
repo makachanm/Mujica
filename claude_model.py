@@ -23,29 +23,23 @@ FALLBACK_MODELS = {"claude-fable-5-2", "claude-fable-5-1", "claude-opus-5-5", "c
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
 
-def is_claude_model(model_name):
-    return model_name.strip().startswith("claude-")
+def has_api_key():
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        return True
+    if os.environ.get("ANTHROPIC_AUTH_TOKEN"):
+        return True
+    return (Path.home() / ".config" / "anthropic").exists()
 
 
 class ClaudeModel:
     def __init__(self, model_name):
-        if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")
-                or (Path.home() / ".config" / "anthropic").exists()):
+        if not has_api_key():
             raise RuntimeError(
                 f"{model_name} 를 쓰려면 Claude API 키가 필요합니다. "
                 "Mujica 폴더의 .env 파일에 ANTHROPIC_API_KEY=sk-ant-... 를 적고 run.sh 로 다시 실행하세요."
             )
-        self.model_name = model_name.strip()
+        self.model_name = model_name
         self.client = anthropic.AsyncAnthropic()
-        # 이 모델로 쓴 토큰 합계 (비용 확인용)
-        self.usage = {"requests": 0, "input": 0, "output": 0, "cache_write": 0, "cache_read": 0}
-
-    def count_usage(self, usage):
-        self.usage["requests"] += 1
-        self.usage["input"] += usage.input_tokens or 0
-        self.usage["output"] += usage.output_tokens or 0
-        self.usage["cache_write"] += usage.cache_creation_input_tokens or 0
-        self.usage["cache_read"] += usage.cache_read_input_tokens or 0
 
     def request_options(self, effort):
         options = {"model": self.model_name, "output_config": {"effort": effort}}
@@ -56,10 +50,9 @@ class ClaudeModel:
 
     async def ask_with_images(self, prompt, jpeg_images_base64):
         """이미지들과 질문을 보내고 글로 된 답을 돌려받는다. 이미지는 질문에 적힌 순서대로 붙는다."""
-        content = [
-            {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": image}}
-            for image in jpeg_images_base64
-        ]
+        content = []
+        for image in jpeg_images_base64:
+            content.append({"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": image}})
         content.append({"type": "text", "text": prompt})
 
         response = await self.client.beta.messages.create(
@@ -67,7 +60,6 @@ class ClaudeModel:
             messages=[{"role": "user", "content": content}],
             **self.request_options(VISION_EFFORT),
         )
-        self.count_usage(response.usage)
         if response.stop_reason == "refusal":
             return "비전 모델이 이 프레임에 대한 답을 거절했습니다."
         return "\n".join(block.text for block in response.content if block.type == "text")
@@ -86,6 +78,5 @@ class ClaudeModel:
             **self.request_options(AGENT_EFFORT),
         )
         async for message in runner:
-            self.count_usage(message.usage)
             if message.stop_reason == "refusal":
                 break
