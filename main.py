@@ -45,14 +45,14 @@ async def find_songs(video_path, has_audio, settings, report_progress):
     # torch 는 불러오는 데만 몇 초 걸려서, 노래 감지를 켰을 때만 불러온다.
     from step.step3_detect_songs import detect_songs
 
-    await report_progress("노래·음악 구간을 찾는 중 (처음 한 번은 모델 327MB 다운로드)", False)
+    await report_progress("노래 구간 찾는 중", False)
     return await asyncio.to_thread(detect_songs, video_path)
 
 
 async def find_moments(user_request, video_description, video_path, settings, output_dir, report_progress):
     chunk_count = settings["chunk_count"]
 
-    await report_progress("영상 정보를 읽는 중", False)
+    await report_progress("영상 읽는 중", False)
     duration, has_audio = await asyncio.to_thread(probe_video, video_path)
     chunks = split_timeline(duration, chunk_count, settings["window_seconds"])
 
@@ -68,7 +68,7 @@ async def find_moments(user_request, video_description, video_path, settings, ou
         # 다음 조각을 준비하는 동안 앞 조각의 에이전트가 같이 일하게 한다.
         agent_tasks = []
         for chunk in chunks:
-            await report_progress(f"조각 {chunk.number}/{chunk_count} 프레임 추출 및 받아쓰기 중", False)
+            await report_progress(f"조각 {chunk.number}/{chunk_count} 준비 중", False)
             await asyncio.to_thread(extract_frames, video_path, chunk, work_dir)
             if has_audio:
                 await asyncio.to_thread(transcribe_chunk, video_path, chunk, work_dir, whisper_server, song_ranges)
@@ -79,12 +79,12 @@ async def find_moments(user_request, video_description, video_path, settings, ou
             )
             agent_tasks.append(asyncio.create_task(agent_run))
 
-        await report_progress(f"서브에이전트 {chunk_count}명이 구간을 찾는 중", False)
+        await report_progress(f"에이전트 {chunk_count}개가 찾는 중", False)
         segments_per_chunk = await asyncio.gather(*agent_tasks)
 
     segments = merge_segments(segments_per_chunk, settings["window_seconds"])
 
-    await report_progress(f"후보 클립 {len(segments)}개를 자르는 중", False)
+    await report_progress(f"클립 {len(segments)}개 자르는 중", False)
     await asyncio.to_thread(cut_clips, video_path, segments, output_dir)
 
     await report_progress("완료", True)

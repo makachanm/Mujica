@@ -1,5 +1,5 @@
 """
-Mujica 웹 화면. 영상 업로드 / 장면 설명(+옵션) / 편집된 후보, 세 공간으로 나뉜다.
+Mujica 웹 화면. 영상 원본 / 프롬프트(+옵션) / 후보, 세 공간으로 나뉜다.
 실행: ./run.sh
 """
 
@@ -13,7 +13,7 @@ import gradio as gr
 
 from common import CACHE_DIR, format_timestamp
 from main import find_moments
-from options import DEFAULT_OPTIONS, OPTIONS_PATH, load_options, save_options
+from options import DEFAULT_OPTIONS, load_options, save_options
 
 
 OUTPUTS_DIR = Path(__file__).parent / "outputs"
@@ -45,26 +45,26 @@ def find_problem(video_path, request_text, settings):
     if video_path is None:
         return "영상을 먼저 올려 주세요."
     if request_text == "":
-        return "찾고 싶은 장면을 설명해 주세요."
+        return "찾을 장면을 입력해 주세요."
     if settings["ollama_url"] == "":
-        return "Ollama 서버 주소를 적어 주세요."
+        return "Ollama 서버 주소를 입력해 주세요."
     if settings["agent_model"] == "":
-        return "에이전트 모델 이름을 적어 주세요."
+        return "에이전트 모델을 입력해 주세요."
     if settings["vision_model"] == "":
-        return "비전 모델 이름을 적어 주세요."
+        return "비전 모델을 입력해 주세요."
     if settings["window_seconds"] <= 0:
         return "프레임 간격은 0초보다 커야 합니다."
     if settings["whisper_server_url"] == "":
-        return "Whisper 서버 주소를 적어 주세요."
+        return "Whisper 서버 주소를 입력해 주세요."
     if settings["whisper_model"] == "":
-        return "Whisper 모델 이름을 적어 주세요."
+        return "Whisper 모델을 입력해 주세요."
     return None
 
 
 def show_candidates(request_text, segments):
     """후보들을 갤러리 항목 (클립, 캡션) 목록과 설명 글로 바꾼다."""
     if len(segments) == 0:
-        return [], f"\"{request_text}\"에 해당하는 구간을 찾지 못했습니다."
+        return [], "맞는 구간이 없습니다."
 
     gallery_items = []
     report_lines = []
@@ -96,7 +96,7 @@ async def find_candidates(video_path, video_description, request_text, *option_v
     run_name = datetime.now().strftime("%Y%m%d-%H%M%S_")
     output_dir = tempfile.mkdtemp(prefix=run_name, dir=OUTPUTS_DIR)
 
-    latest_progress = {"text": "시작하는 중"}
+    latest_progress = {"text": "시작 중"}
 
     async def report_progress(description, done):
         latest_progress["text"] = description
@@ -110,13 +110,13 @@ async def find_candidates(video_path, video_description, request_text, *option_v
 
     segments = search.result()
     gallery_items, report = show_candidates(request_text, segments)
-    yield f"완료: 후보 {len(segments)}개", gallery_items, report
+    yield f"후보 {len(segments)}개", gallery_items, report
 
 
 def save_settings(*option_values):
     """'설정 저장' 버튼."""
     save_options(collect_settings(option_values))
-    return f"저장했습니다: {OPTIONS_PATH.name}"
+    return "저장했습니다."
 
 
 def clear_cache():
@@ -134,10 +134,7 @@ def clear_cache():
                 freed_bytes += path.stat().st_size
         shutil.rmtree(folder)
 
-    return (
-        f"지웠습니다: 노래 감지 결과 {len(analysis_files)}개, 후보 클립 폴더 {len(clip_folders)}개 "
-        f"({freed_bytes / 1024 / 1024:.1f}MB)"
-    )
+    return f"{freed_bytes / 1024 / 1024:.1f}MB 지웠습니다."
 
 
 def fill_saved_options():
@@ -152,14 +149,10 @@ def build_options_panel():
         gr.Markdown("**에이전트**")
         ollama_url = gr.Textbox(label="Ollama 서버 주소", value=initial["ollama_url"])
         with gr.Row():
-            agent_model = gr.Textbox(
-                label="에이전트 모델 (도구 호출 지원, claude- 로 시작하면 Claude API)", value=initial["agent_model"],
-            )
-            vision_model = gr.Textbox(
-                label="비전 모델 (이미지 입력 지원, claude- 로 시작하면 Claude API)", value=initial["vision_model"],
-            )
+            agent_model = gr.Textbox(label="에이전트 모델", value=initial["agent_model"])
+            vision_model = gr.Textbox(label="비전 모델", value=initial["vision_model"])
         agent_count = gr.Slider(
-            label="에이전트 수 (= 영상을 나눌 조각 수)",
+            label="에이전트 수",
             minimum=1, maximum=16, step=1,
             value=initial["chunk_count"],
         )
@@ -167,19 +160,19 @@ def build_options_panel():
         gr.Markdown("**프레임**")
         with gr.Row():
             window_seconds = gr.Number(
-                label="프레임 간격(초): 대표 프레임 한 장이 맡는 시간",
+                label="프레임 간격 (초)",
                 minimum=1,
                 value=initial["window_seconds"],
             )
             frames_per_look = gr.Slider(
-                label="에이전트가 한 번에 볼 수 있는 프레임 수",
+                label="한 번에 보는 프레임 수",
                 minimum=1, maximum=16, step=1,
                 value=initial["frames_per_look"],
             )
 
         gr.Markdown("**받아쓰기**")
         whisper_server_url = gr.Textbox(
-            label="Whisper 서버 주소 (OpenAI 호환)",
+            label="Whisper 서버 주소",
             value=initial["whisper_server_url"],
         )
         with gr.Row():
@@ -192,7 +185,7 @@ def build_options_panel():
                 value=initial["language"],
             )
         detect_songs = gr.Checkbox(
-            label="노래·음악 구간 감지 (가사는 받아쓰지 않고 윈도우에 표시, torch 필요)",
+            label="노래 구간 감지",
             value=initial["detect_songs"],
         )
 
@@ -205,7 +198,7 @@ def build_options_panel():
 
         with gr.Row():
             save_button = gr.Button("설정 저장", size="sm")
-            clear_button = gr.Button("캐시 비우기 (노래 감지 결과, 지난 후보 클립)", size="sm")
+            clear_button = gr.Button("캐시 비우기", size="sm")
         option_status = gr.Markdown()
         save_button.click(fn=save_settings, inputs=option_inputs, outputs=option_status)
         clear_button.click(fn=clear_cache, outputs=option_status)
@@ -222,8 +215,8 @@ def build_app():
                 gr.Markdown("## 영상 원본")
                 video_input = gr.Video(label="원본 영상", sources=["upload"])
                 video_description_input = gr.Textbox(
-                    label="영상 설명 (선택, 영상에 대한 간략한 정보를 입력해주세요.):",
-                    placeholder="예: 진행자 둘(토아, 캔시)이 게스트 가수를 불러 노래 퀴즈를 하는 예능 방송",
+                    label="영상 설명 (선택)",
+                    placeholder="예: 진행자 두 명이 게스트와 노래 퀴즈를 하는 예능",
                     lines=3,
                 )
 
@@ -231,7 +224,7 @@ def build_app():
                 gr.Markdown("## 프롬프트")
                 request_input = gr.Textbox(
                     label="찾고 싶은 장면",
-                    placeholder="예: 발표자가 매출 그래프를 설명하는 부분",
+                    placeholder="예: 매출 그래프 설명하는 부분",
                     lines=6,
                 )
                 option_inputs = build_options_panel()
