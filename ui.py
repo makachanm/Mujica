@@ -80,8 +80,9 @@ def show_candidates(request_text, segments):
     return gallery_items, "\n".join(report_lines)
 
 
-async def find_candidates(video_path, request_text, *option_values):
+async def find_candidates(video_path, video_description, request_text, *option_values):
     """'후보 찾기' 버튼. (진행 상황, 후보 갤러리, 후보 설명) 을 계속 내보낸다."""
+    video_description = video_description.strip()
     request_text = request_text.strip()
     settings = collect_settings(option_values)
 
@@ -100,7 +101,7 @@ async def find_candidates(video_path, request_text, *option_values):
         latest_progress["text"] = description
 
     search = asyncio.create_task(
-        find_moments(request_text, video_path, settings, output_dir, report_progress)
+        find_moments(request_text, video_description, video_path, settings, output_dir, report_progress)
     )
     while not search.done():
         yield latest_progress["text"], [], ""
@@ -196,6 +197,11 @@ def build_app():
             with gr.Column():
                 gr.Markdown("## 1. 영상 업로드")
                 video_input = gr.Video(label="원본 영상", sources=["upload"])
+                video_description_input = gr.Textbox(
+                    label="영상 설명 (선택): 에이전트가 이 내용을 배경으로 알고 영상을 본다",
+                    placeholder="예: 진행자 둘(토아, 캔시)이 게스트 가수를 불러 노래 퀴즈를 하는 예능 방송",
+                    lines=3,
+                )
 
             with gr.Column():
                 gr.Markdown("## 2. 장면 설명")
@@ -214,7 +220,7 @@ def build_app():
 
         find_button.click(
             fn=find_candidates,
-            inputs=[video_input, request_input, *option_inputs],
+            inputs=[video_input, video_description_input, request_input, *option_inputs],
             outputs=[progress_text, candidate_gallery, candidate_report],
         )
         app.load(fn=fill_saved_options, outputs=option_inputs)

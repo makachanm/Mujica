@@ -25,6 +25,9 @@ SYSTEM_PROMPT = """\
 사용자가 원하는 장면이 당신이 맡은 조각 안에서 몇 초부터 몇 초까지인지 찾아야 합니다.
 
 받는 자료
+- 영상 배경: 사용자가 적은 영상 설명과 고유명사 사전. 없을 수도 있습니다.
+  어떤 영상인지, 누가 나오는지, 무슨 상황인지를 여기서 먼저 파악하고, 받아쓰기와 프레임을 이 배경에 맞춰 해석하세요.
+  다만 구간을 고르는 근거는 받아쓰기와 프레임입니다. 배경에 적힌 내용만으로 구간을 정하지 마세요.
 - 조각 전체를 일정 길이의 '윈도우'로 나눈 목록과, 윈도우별 음성 받아쓰기 결과.
 - 받아쓰기 앞에 "(노래 구간)" 또는 "(음악·BGM 구간)"이 붙은 윈도우는 노래나 음악이 나오는 부분입니다.
   가사는 받아쓰지 않았으므로, 노래·음악과 관련된 요청이면 이 표시와 프레임으로 판단하세요.
@@ -61,9 +64,22 @@ def create_model(model_name, ollama_url):
     return ChatOllama(model=model_name, base_url=ollama_url, num_ctx=OLLAMA_CONTEXT_LENGTH)
 
 
+def describe_background(video_description, glossary_path):
+    """사용자가 적은 영상 설명과 고유명사 사전을 에이전트와 비전 모델에게 보여 줄 글로 묶는다. 둘 다 없으면 빈 글."""
+    parts = []
+    if video_description != "":
+        parts.append(f"영상 설명 (사용자가 적은 것): {video_description}")
+
+    glossary_text = describe_glossary(glossary_path)
+    if glossary_text != "":
+        parts.append(glossary_text)
+
+    return "\n".join(parts)
+
+
 def describe_glossary(glossary_path):
     """
-    고유명사 사전(glossary.json)을 에이전트에게 보여 줄 글로 바꾼다. 파일이 없으면 빈 글.
+    고유명사 사전(glossary.json)을 글로 바꾼다. 파일이 없으면 빈 글.
 
         {
           "토아": ["토하"],                     정확한 표기: [받아쓰기에서 잘못 나오는 형태, ...]
@@ -81,7 +97,6 @@ def describe_glossary(glossary_path):
         return ""
 
     lines = [
-        "",
         "고유명사 사전",
         "- 아래 이름·용어는 이 영상에 나올 수 있습니다. 받아쓰기에 비슷한 소리의 단어가 나오면 문맥상 맞는 경우에만 "
         "이 표기로 고쳐 읽으세요. 일반 단어로 쓰인 경우(예: '토하다')는 고치지 마세요.",
@@ -105,18 +120,18 @@ def describe_glossary(glossary_path):
     return "\n".join(lines)
 
 
-def build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_text):
-    lines = [
-        f"사용자 요청: {user_request}",
-        "",
+def build_briefing(chunk, chunk_count, user_request, frames_per_look, background_text):
+    lines = [f"사용자 요청: {user_request}", ""]
+    if background_text != "":
+        lines += ["영상 배경:", background_text, ""]
+
+    lines += [
         f"당신이 맡은 조각: {chunk.number}번 / 전체 {chunk_count}개",
         f"조각 범위: {chunk.start:.1f}s ~ {chunk.end:.1f}s "
         f"({format_timestamp(chunk.start)} ~ {format_timestamp(chunk.end)})",
         f"윈도우 수: {len(chunk.windows)}개 (윈도우 번호 1 ~ {len(chunk.windows)})",
         f"look_at_frames 로 한 번에 볼 수 있는 프레임 수: 최대 {frames_per_look}장",
     ]
-    if glossary_text != "":
-        lines.append(glossary_text)
     lines += ["", "윈도우별 받아쓰기:"]
 
     for window in chunk.windows:
@@ -129,7 +144,7 @@ def build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_t
     return "\n".join(lines)
 
 
-async def ask_vision_model(vision_model, windows, question):
+async def ask_vision_model(vision_model, windows, question, background_text):
     # Ollama 는 도구 결과 속 이미지를 모델에게 제대로 넘겨준다는 보장이 없어서,
     # 에이전트가 프레임을 직접 보는 대신 비전 모델에게 물어보고 글로 된 답을 받는다.
     # 비전 모델은 소리를 못 듣는다. 화면만 보고 "말하는 장면"인지 "노래하는 장면"인지 짐작하지 않도록
@@ -145,6 +160,11 @@ async def ask_vision_model(vision_model, windows, question):
         "'그때 들린 소리'는 그 프레임 앞뒤의 음성을 받아쓴 것입니다. "
         "\"(노래 구간)\"과 \"(음악·BGM 구간)\"은 말이 아니라 노래나 음악이 나오는 부분이라는 표시입니다."
     )
+    if background_text != "":
+        instruction.append("")
+        instruction.append("영상 배경 (누가 누구인지, 어떤 상황인지 알아보는 데 참고하세요):")
+        instruction.append(background_text)
+    instruction.append("")
     instruction.append(f"질문: {question}")
     instruction.append(
         "이미지마다 몇 번째 이미지인지 밝히고 짧게 답하세요. 화면에 보이는 것과 소리로 알 수 있는 것을 구분해서 쓰고, "
@@ -165,7 +185,7 @@ async def ask_vision_model(vision_model, windows, question):
     return response.content
 
 
-def make_tool_functions(chunk, found_segments, vision_model, frames_per_look):
+def make_tool_functions(chunk, found_segments, vision_model, frames_per_look, background_text):
     # 도구 인자의 타입 힌트와 docstring 은 LangChain 과 Claude SDK 가 도구 스키마를 만드는 데 쓴다.
 
     async def look_at_frames(first_window: int, last_window: int, question: str) -> str:
@@ -187,7 +207,7 @@ def make_tool_functions(chunk, found_segments, vision_model, frames_per_look):
             return f"한 번에 {frames_per_look}장까지만 볼 수 있습니다. 범위를 줄여 주세요."
 
         windows = chunk.windows[first_window - 1:last_window]
-        return await ask_vision_model(vision_model, windows, question)
+        return await ask_vision_model(vision_model, windows, question, background_text)
 
     async def submit_segment(start_seconds: float, end_seconds: float, reason: str) -> str:
         """요청에 해당하는 구간 하나를 제출한다. 시각은 영상 전체 기준 초 단위.
@@ -219,10 +239,10 @@ def make_tool_functions(chunk, found_segments, vision_model, frames_per_look):
 
 
 async def run_chunk_agent(agent_model, vision_model, chunk, chunk_count, user_request, frames_per_look,
-                          glossary_text):
+                          background_text):
     found_segments = []
-    tool_functions = make_tool_functions(chunk, found_segments, vision_model, frames_per_look)
-    briefing = build_briefing(chunk, chunk_count, user_request, frames_per_look, glossary_text)
+    tool_functions = make_tool_functions(chunk, found_segments, vision_model, frames_per_look, background_text)
+    briefing = build_briefing(chunk, chunk_count, user_request, frames_per_look, background_text)
 
     if isinstance(agent_model, ClaudeModel):
         await agent_model.run_agent(SYSTEM_PROMPT, briefing, tool_functions, AGENT_STEP_LIMIT)

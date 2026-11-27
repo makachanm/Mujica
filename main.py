@@ -1,5 +1,6 @@
 """
 Mujica 파이프라인. 영상과 요청 문장을 받아 요청한 장면을 찾고, 후보 클립으로 잘라 돌려준다.
+사용자가 적은 짧은 영상 설명(video_description)은 에이전트와 비전 모델에게 영상 배경으로 알려 준다. 비어 있어도 된다.
 
 settings
     ollama_url          Ollama 서버 주소
@@ -13,7 +14,7 @@ settings
     language            받아쓰기 언어 코드
     detect_songs        노래·음악 구간을 찾아 받아쓰기에서 빼고 윈도우에 표시할지
 
-고유명사 사전은 glossary.json 에서 읽어 에이전트에게 알려 준다. 없으면 쓰지 않는다 (step6 describe_glossary 참고).
+고유명사 사전은 glossary.json 에서 읽어 영상 배경에 같이 넣는다. 없으면 쓰지 않는다 (step6 describe_glossary 참고).
 
 report_progress(문장, 끝났는지) 는 진행 상황을 받는 비동기 함수다.
 """
@@ -26,7 +27,7 @@ from step.step1_probe_video import probe_video
 from step.step2_split_timeline import split_timeline
 from step.step4_extract_frames import extract_frames
 from step.step5_transcribe_audio import WhisperServer, transcribe_chunk
-from step.step6_chunk_agent import create_model, describe_glossary, run_chunk_agent
+from step.step6_chunk_agent import create_model, describe_background, run_chunk_agent
 from step.step7_merge_results import merge_segments
 from step.step8_cut_clips import cut_clips
 
@@ -48,7 +49,7 @@ async def find_songs(video_path, has_audio, settings, report_progress):
     return await asyncio.to_thread(detect_songs, video_path)
 
 
-async def find_moments(user_request, video_path, settings, output_dir, report_progress):
+async def find_moments(user_request, video_description, video_path, settings, output_dir, report_progress):
     chunk_count = settings["chunk_count"]
 
     await report_progress("영상 정보를 읽는 중", False)
@@ -56,7 +57,7 @@ async def find_moments(user_request, video_path, settings, output_dir, report_pr
     chunks = split_timeline(duration, chunk_count, settings["window_seconds"])
 
     song_ranges = await find_songs(video_path, has_audio, settings, report_progress)
-    glossary_text = describe_glossary(GLOSSARY_PATH)
+    background_text = describe_background(video_description, GLOSSARY_PATH)
 
     whisper_server = WhisperServer(settings["whisper_server_url"], settings["whisper_model"], settings["language"])
     agent_model = create_model(settings["agent_model"], settings["ollama_url"])
@@ -74,7 +75,7 @@ async def find_moments(user_request, video_path, settings, output_dir, report_pr
 
             agent_run = run_chunk_agent(
                 agent_model, vision_model, chunk, chunk_count, user_request, settings["frames_per_look"],
-                glossary_text,
+                background_text,
             )
             agent_tasks.append(asyncio.create_task(agent_run))
 
