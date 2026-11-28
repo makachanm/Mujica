@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import json
 from pathlib import Path
@@ -9,9 +10,14 @@ from langchain_ollama import ChatOllama
 
 from claude_model import ClaudeModel
 from common import FoundSegment, format_timestamp
+from step.step4_extract_frames import save_frame
 
 
-AGENT_STEP_LIMIT = 60
+# look_closely 로 여러 번 들여다볼 수 있게 넉넉히 둔다.
+AGENT_STEP_LIMIT = 100
+
+# look_closely 로 뽑는 프레임 사이의 최소 간격. 짧은 구간을 이보다 촘촘하게 봐도 거의 같은 그림이다.
+CLOSE_LOOK_MIN_GAP_SECONDS = 0.5
 
 # 프롬프트에 시각을 소수 첫째 자리까지만 보여 주므로, 그만큼의 반올림 오차는 허용한다.
 BOUNDARY_TOLERANCE_SECONDS = 0.1
@@ -33,15 +39,19 @@ SYSTEM_PROMPT = """\
   가사는 받아쓰지 않았으므로, 노래·음악과 관련된 요청이면 이 표시와 프레임으로 판단하세요.
 - 윈도우마다 대표 프레임이 한 장씩 있습니다. look_at_frames 도구로 프레임 범위와 질문을 보내면
   프레임을 본 결과를 글로 돌려받습니다.
+- 대표 프레임은 윈도우 한가운데 한 장뿐이라 타격, 동작, 장면 전환 같은 짧은 순간을 놓칠 수 있습니다.
+  look_closely 도구로 초 단위 구간을 보내면 그 구간을 촘촘하게 나눈 프레임을 보고 답을 돌려받습니다.
 
 일하는 방법
 1. 받아쓰기를 먼저 읽고 후보가 될 만한 윈도우를 고릅니다.
 2. 화면이 중요한 요청이거나 받아쓰기만으로 확실하지 않으면 look_at_frames 로 확인합니다.
    질문은 요청과 관련해 무엇을 확인하고 싶은지 구체적으로 적습니다.
    후보 윈도우가 한 번에 볼 수 있는 프레임 수보다 많으면, 범위를 나눠 여러 번 불러서 후보를 빠짐없이 확인합니다.
-3. 요청에 맞는 윈도우가 이어져 있으면 한 구간으로 묶어서 제출합니다.
-   첫 윈도우의 시작부터 마지막 윈도우의 끝까지를 submit_segment 한 번으로 내고, 윈도우마다 따로 내지 않습니다.
-   떨어져 있는 장면은 각각 따로 제출합니다.
+   받아쓰기가 없는 윈도우에서 화면 속 짧은 동작을 찾는 요청이면, 대표 프레임만 보고 없다고 판단하지 말고
+   look_closely 로 그 윈도우를 촘촘하게 확인합니다.
+3. 요청에 맞는 장면이 이어져 있으면 한 구간으로 묶어서 제출합니다. 떨어져 있는 장면은 각각 따로 제출합니다.
+   제출하기 전에 구간의 시작과 끝 근처를 look_closely 로 보고, 장면이 실제로 시작하고 끝나는 시각에 맞춥니다.
+   윈도우 경계에 맞출 필요는 없습니다.
    시각은 영상 전체 기준 초 단위이며, 반드시 맡은 조각의 범위 안이어야 합니다.
    제출은 submit_segment 도구를 불러야만 됩니다. 답변 글에 구간을 적기만 하면 제출되지 않습니다.
 4. 맞는 구간이 없으면 아무것도 제출하지 않고 "해당 없음"이라고 답합니다.
@@ -130,7 +140,7 @@ def build_briefing(chunk, chunk_count, user_request, frames_per_look, background
         f"조각 범위: {chunk.start:.1f}s ~ {chunk.end:.1f}s "
         f"({format_timestamp(chunk.start)} ~ {format_timestamp(chunk.end)})",
         f"윈도우 수: {len(chunk.windows)}개 (윈도우 번호 1 ~ {len(chunk.windows)})",
-        f"look_at_frames 로 한 번에 볼 수 있는 프레임 수: 최대 {frames_per_look}장",
+        f"look_at_frames 와 look_closely 로 한 번에 볼 수 있는 프레임 수: 최대 {frames_per_look}장",
     ]
     lines += ["", "윈도우별 받아쓰기:"]
 
@@ -144,17 +154,15 @@ def build_briefing(chunk, chunk_count, user_request, frames_per_look, background
     return "\n".join(lines)
 
 
-async def ask_vision_model(vision_model, windows, question, background_text):
+async def ask_vision_model(vision_model, frames, question, background_text):
+    """frames 는 (이미지 설명, 프레임 파일, 그때 들린 소리) 목록이다."""
     # Ollama 는 도구 결과 속 이미지를 모델에게 제대로 넘겨준다는 보장이 없어서,
     # 에이전트가 프레임을 직접 보는 대신 비전 모델에게 물어보고 글로 된 답을 받는다.
     # 비전 모델은 소리를 못 듣는다. 화면만 보고 "말하는 장면"인지 "노래하는 장면"인지 짐작하지 않도록
     # 그 시점의 받아쓰기(노래·음악 표시 포함)를 프레임마다 같이 알려 준다.
     instruction = ["아래 이미지들은 영상의 여러 시점에서 뽑은 프레임입니다."]
-    for order, window in enumerate(windows, start=1):
-        sound = window.transcript if window.transcript != "" else "(음성 없음)"
-        instruction.append(
-            f"{order}번째 이미지 = 윈도우 {window.index} ({window.start:.1f}s ~ {window.end:.1f}s) | 그때 들린 소리: {sound}"
-        )
+    for order, (label, frame_path, sound) in enumerate(frames, start=1):
+        instruction.append(f"{order}번째 이미지 = {label} | 그때 들린 소리: {sound}")
     instruction.append("")
     instruction.append(
         "'그때 들린 소리'는 그 프레임 앞뒤의 음성을 받아쓴 것입니다. "
@@ -172,7 +180,9 @@ async def ask_vision_model(vision_model, windows, question, background_text):
     )
 
     prompt = "\n".join(instruction)
-    images = [base64.b64encode(Path(window.frame_path).read_bytes()).decode("ascii") for window in windows]
+    images = []
+    for label, frame_path, sound in frames:
+        images.append(base64.b64encode(Path(frame_path).read_bytes()).decode("ascii"))
 
     if isinstance(vision_model, ClaudeModel):
         return await vision_model.ask_with_images(prompt, images)
@@ -185,8 +195,18 @@ async def ask_vision_model(vision_model, windows, question, background_text):
     return response.content
 
 
-def make_tool_functions(chunk, found_segments, vision_model, frames_per_look, background_text):
+def heard_at(chunk, time):
+    """time 이 속한 윈도우의 받아쓰기."""
+    for window in chunk.windows:
+        if window.start <= time < window.end:
+            if window.transcript != "":
+                return window.transcript
+    return "(음성 없음)"
+
+
+def make_tool_functions(video_path, work_dir, chunk, found_segments, vision_model, frames_per_look, background_text):
     # 도구 인자의 타입 힌트와 docstring 은 LangChain 과 Claude SDK 가 도구 스키마를 만드는 데 쓴다.
+    close_look_count = 0
 
     async def look_at_frames(first_window: int, last_window: int, question: str) -> str:
         """first_window 번부터 last_window 번 윈도우까지(양 끝 포함)의 대표 프레임을 보고 question 에 답한다.
@@ -206,8 +226,48 @@ def make_tool_functions(chunk, found_segments, vision_model, frames_per_look, ba
         if last_window - first_window + 1 > frames_per_look:
             return f"한 번에 {frames_per_look}장까지만 볼 수 있습니다. 범위를 줄여 주세요."
 
-        windows = chunk.windows[first_window - 1:last_window]
-        return await ask_vision_model(vision_model, windows, question, background_text)
+        frames = []
+        for window in chunk.windows[first_window - 1:last_window]:
+            label = f"윈도우 {window.index} ({window.start:.1f}s ~ {window.end:.1f}s)"
+            frames.append((label, window.frame_path, heard_at(chunk, window.start)))
+        return await ask_vision_model(vision_model, frames, question, background_text)
+
+    async def look_closely(start_seconds: float, end_seconds: float, question: str) -> str:
+        """start_seconds 부터 end_seconds 까지를 촘촘하게 나눈 프레임들을 보고 question 에 답한다.
+        대표 프레임으로 놓친 짧은 순간을 찾거나, 장면이 시작하고 끝나는 시각을 확인할 때 쓴다.
+
+        Args:
+            start_seconds: 볼 구간 시작 (영상 전체 기준 초)
+            end_seconds: 볼 구간 끝 (영상 전체 기준 초)
+            question: 프레임을 보고 확인하고 싶은 것
+        """
+        nonlocal close_look_count
+        if start_seconds < chunk.start:
+            return f"시작 시각은 조각 시작({chunk.start:.1f}s)보다 앞설 수 없습니다."
+        if end_seconds > chunk.end:
+            return f"끝 시각은 조각 끝({chunk.end:.1f}s)을 넘을 수 없습니다."
+        if start_seconds >= end_seconds:
+            return "끝 시각은 시작 시각보다 뒤여야 합니다."
+
+        frame_count = frames_per_look
+        if (end_seconds - start_seconds) / frame_count < CLOSE_LOOK_MIN_GAP_SECONDS:
+            frame_count = max(1, int((end_seconds - start_seconds) / CLOSE_LOOK_MIN_GAP_SECONDS))
+        gap = (end_seconds - start_seconds) / frame_count
+
+        close_look_count += 1
+        frames = []
+        for order in range(frame_count):
+            time = start_seconds + gap * (order + 0.5)
+            frame_path = str(Path(work_dir) / f"chunk{chunk.number:02d}_close{close_look_count:03d}_{order:02d}.jpg")
+            try:
+                await asyncio.to_thread(save_frame, video_path, time, frame_path)
+            except RuntimeError:
+                continue  # 영상 끝 근처라 프레임이 없는 시점
+            frames.append((f"{time:.1f}s", frame_path, heard_at(chunk, time)))
+
+        if len(frames) == 0:
+            return "이 구간에서는 프레임을 뽑지 못했습니다."
+        return await ask_vision_model(vision_model, frames, question, background_text)
 
     async def submit_segment(start_seconds: float, end_seconds: float, reason: str) -> str:
         """요청에 해당하는 구간 하나를 제출한다. 시각은 영상 전체 기준 초 단위.
@@ -235,13 +295,15 @@ def make_tool_functions(chunk, found_segments, vision_model, frames_per_look, ba
         found_segments.append(FoundSegment(chunk.number, start_seconds, end_seconds, reason))
         return "제출했습니다."
 
-    return [look_at_frames, submit_segment]
+    return [look_at_frames, look_closely, submit_segment]
 
 
-async def run_chunk_agent(agent_model, vision_model, chunk, chunk_count, user_request, frames_per_look,
-                          background_text):
+async def run_chunk_agent(agent_model, vision_model, video_path, work_dir, chunk, chunk_count, user_request,
+                          frames_per_look, background_text):
     found_segments = []
-    tool_functions = make_tool_functions(chunk, found_segments, vision_model, frames_per_look, background_text)
+    tool_functions = make_tool_functions(
+        video_path, work_dir, chunk, found_segments, vision_model, frames_per_look, background_text,
+    )
     briefing = build_briefing(chunk, chunk_count, user_request, frames_per_look, background_text)
 
     if isinstance(agent_model, ClaudeModel):

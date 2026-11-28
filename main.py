@@ -75,8 +75,8 @@ async def find_moments(user_request, video_description, video_path, settings, ou
                 await asyncio.to_thread(transcribe_chunk, video_path, chunk, work_dir, whisper_server, song_ranges)
 
             agent_run = run_chunk_agent(
-                agent_model, vision_model, chunk, chunk_count, user_request, settings["frames_per_look"],
-                background_text,
+                agent_model, vision_model, video_path, work_dir, chunk, chunk_count, user_request,
+                settings["frames_per_look"], background_text,
             )
             agent_tasks.append(asyncio.create_task(agent_run))
 
