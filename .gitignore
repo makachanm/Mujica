@@ -4,4 +4,5 @@ outputs/
 options.json
 glossary.json
 .env
-testdata/
+benchmark/videos/
+benchmark/results/**/*.mp4

@@ -1,0 +1,225 @@
+{
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 1,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5"
+  },
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "testdata/testdata1.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "testdata/testdata2.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 39.70991134643555,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체가 노래 구간이며 애니메이션풍 일러스트가 이어지고 끝인사가 나오는 엔딩곡 영상으로 보임"
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.65,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 29.85032343864441,
+      "found": [
+        [
+          20.0,
+          26.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 공룡 후드 의상을 입고 앉아 있다가 춤추는 장면"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.85,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 38.40682935714722,
+      "found": [
+        [
+          48.0,
+          56.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 서서 웅덩이에 비친 우산 쓴 모습을 내려다보는 장면"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.5384615384615384,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 54.61917042732239,
+      "found": [
+        [
+          93.0,
+          107.0
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니(17번)가 스윙하고 타구를 지켜본 뒤 관중이 환호하고 더그아웃에서 세리머니를 하는 장면입니다. 스코어는 0-3입니다. 타구가 담장을 넘어가는 순간은 프레임에서 확인하지 못했습니다."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 25.18169903755188,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 4차전에서 신체적으로 어디까지 할 수 있는지 묻는 질문과 후속 질문"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.9,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 43.50087904930115,
+      "found": [
+        [
+          36.0,
+          46.0
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니 인터뷰 자막에 \"선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것\"이라는 내용이 나옴"
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    }
+  ]
+}

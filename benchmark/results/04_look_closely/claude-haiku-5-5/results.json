@@ -1,0 +1,678 @@
+{
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 1,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5"
+  },
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "testdata/testdata1.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "testdata/testdata2.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 45.92720365524292,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체(0~90.1초)가 노래 구간으로 표시되어 있고, 모든 프레임이 2D 애니메이션 연출 화면입니다. 7번째 윈도우에 \"ご視聴ありがとうございました\"가 받아쓰기되어 마무리 분위기와 맞습니다. 다만 크레딧 자막이나 곡명 텍스트는 프레임에서 확인되지 않았고, 노래의 시작·끝 시점도 정확히 특정하지 못했습니다. 조각 안에서 엔딩곡 후보로 제출하며, 확정하려면 이웃 조각과 크레딧 유무를 함께 확인해야 합니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 43.480066537857056,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체(0~90.1초)가 노래 구간으로 표시되어 있고, 일러스트 카드 연출에 노래가 깔린 형태입니다. 61초 무렵부터 \"ご視聴ありがとうございました\"(시청 감사합니다) 음성이 나와 영상 마무리 인사로 보입니다. 다만 화면에 엔딩 크레딧이나 제목 카드는 확인되지 않아 엔딩곡 구간이라고 확정하기는 어렵습니다. 근거가 약한 추정이므로 사용자가 확인이 필요합니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 2
+    },
+    {
+      "tiou": 0.3218645948945616,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 37.49603486061096,
+      "found": [
+        [
+          60.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "잠정 제출(확정 아님). 이 조각 전체(0~90.1초)가 노래 구간이고 엔딩 크레딧 자막은 샘플 프레임에서 확인되지 않았다. 61.9~69.4초 무렵 \"ご視聴ありがとうございました\"(시청해 주셔서 감사합니다)라는 끝맺음 멘트가 받아쓰기되었고, 그 뒤로 노래가 이어지며 조각 끝(90.1초)까지 밤하늘 등 조용한 마무리 장면이 나온다. 따라서 엔딩 곡이 시작되는 지점은 이 60초 무렵 이후로 보이나, 시작 시각의 확정은 영상 앞부분과 뒷부분의 추가 확인이 필요하다. 구간이 조각 끝에 걸쳐 있으므로 조각 경계(90.1초)까지만 제출했다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 3
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 35.01218390464783,
+      "found": [],
+      "reasons": [],
+      "case": "anime_ending_song",
+      "run": 4
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 45.17402672767639,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "확정 근거는 약합니다. 조각 전체(0~90.1초)가 노래 구간으로 표시되어 있고, 일러스트 중심의 음악 연출 컷이 이어지며 스태프 자막이나 엔딩 크레딧 화면은 확인되지 않았습니다. 60~70초 부근에 \"ご視聴ありがとうございました\"(시청해 주셔서 감사합니다)라는 마무리 인사가 들려, 이 노래가 영상의 마무리 곡일 가능성이 있어 전체 구간을 제출합니다. 엔딩 곡 여부는 직접 확인이 필요합니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 5
+    },
+    {
+      "tiou": 0.8800000000000001,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 61.53530240058899,
+      "found": [
+        [
+          18.0,
+          26.8
+        ]
+      ],
+      "reasons": [
+        [
+          "흰 후드에 등 돌기와 꼬리가 달린 공룡 의상 캐릭터가 18.5초경 처음 나타나 입에서 불을 뿜는 장면 등을 거쳐 26.8초경 화면에서 빠진다. 전 구간이 노래 구간이라 화면 기준으로 판단했다."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.9100000000000001,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 53.94711232185364,
+      "found": [
+        [
+          17.5,
+          26.6
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 흰 후드와 등의 검은 뿔 장식, 꼬리가 달린 공룡 모양 옷을 입고 있는 장면. 17.8초 무렵부터 공룡 옷이 보이고, 26.2초까지 뚜렷하게 보이다가 26.8초 전후 장면 전환과 함께 사라짐. 시작 시각은 프레임 간 판독이 엇갈려(17.2초 전환 중 vs 17.2초 등장) 대략 값으로 잡음. 전 구간이 노래 구간이라 음성 단서는 없고 화면으로 판단함."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 2
+    },
+    {
+      "tiou": 0.9514563106796117,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 46.80038666725159,
+      "found": [
+        [
+          16.7,
+          26.8
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 흰 후드에 공룡(킥구루미) 모양 의상을 입은 장면이 16.7초경 등장해 26.2~26.8초경 불꽃 속에서 사라질 때까지 이어집니다. 윈도우 2~3 구간에 해당하며, 음성은 노래 구간이라 화면으로 판단했습니다."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 3
+    },
+    {
+      "tiou": 0.9523809523809523,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 65.25689101219177,
+      "found": [
+        [
+          16.5,
+          27.0
+        ]
+      ],
+      "reasons": [
+        [
+          "흰 후드 전신 옷에 머리 위 검은 돌기와 꼬리가 달린 공룡 코스튬 캐릭터가 약 16.5초경 처음 나타나 여러 포즈(불을 뿜는 모습 포함)를 보이다가 약 26.8초에 화면 밖으로 밀려나며 사라짐. 전 구간이 노래 구간이라 화면으로 판단함."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 4
+    },
+    {
+      "tiou": 0.9,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 46.52129030227661,
+      "found": [
+        [
+          17.5,
+          26.5
+        ]
+      ],
+      "reasons": [
+        [
+          "흰 후드에 공룡 입 장식, 등 가시, 꼬리를 단 공룡 코스튬 차림의 캐릭터가 17.5초부터 나타나 26.2~26.8초 사이까지 이어짐. 이후 장면 전환으로 코스튬이 사라짐."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 5
+    },
+    {
+      "tiou": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 58.12565994262695,
+      "found": [
+        [
+          47.0,
+          57.0
+        ]
+      ],
+      "reasons": [
+        [
+          "47초경 파란 물웅덩이가 처음 보이고, 캐릭터(우산을 든 소녀)가 웅덩이를 위에서 내려다보는 구도가 56.6초경까지 이어짐. 57.2초에 웅덩이가 조각으로 바뀌며 끝남. 비는 뚜렷하지 않고 우산과 물결 고리로 비 오는 상황을 암시함. 비가 뚜렷한 장면(41~45초)은 웅덩이가 없어 제외."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.5555555555555556,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 67.83436918258667,
+      "found": [
+        [
+          47.0,
+          65.0
+        ]
+      ],
+      "reasons": [
+        [
+          "우산을 든 캐릭터가 위에서 물웅덩이를 내려다보는 장면. 47초 무렵 위에서 내려다보는 구도로 바뀌며 파란 웅덩이와 빗방울 물결이 나타나고, 58~64초에 캐릭터가 고개를 숙이고 웅덩이 위에 서 있다가 65초 무렵 빨간 전환 패널로 넘어감. 음성은 전부 노래 구간이라 화면으로 판단함."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 2
+    },
+    {
+      "tiou": 0.95,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 61.73270034790039,
+      "found": [
+        [
+          47.0,
+          56.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 물웅덩이를 위에서 내려다보는 구도가 약 47~56초 사이에 이어짐(물결·동심원 파문이 있는 웅덩이). 다만 이 장면 안에서 빗줄기는 뚜렷하게 확인되지 않아 '비 오는' 조건은 약하게 충족. 빗줄기가 보이는 장면(약 41~45초)은 웅덩이 장면과 달라 제외함."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 3
+    },
+    {
+      "tiou": 0.5411764705882355,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 74.77933144569397,
+      "found": [
+        [
+          47.8,
+          64.0
+        ]
+      ],
+      "reasons": [
+        [
+          "위쪽에서 아래 웅덩이를 내려다보는 구도가 47.8초부터 시작해 이어지며, 58초 이후에는 우산 쓴 캐릭터가 물웅덩이 위로 빗방울 표시와 함께 아래를 보며 걷는 모습이 나옵니다. 장면은 약 64초 전후 아이가 화면에서 사라지며 끝납니다. 다만 비는 뒤쪽(58초 이후)에만 뚜렷하고, 앞부분은 내려다보는 구도 위주라 완전히 일치하지는 않습니다."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 4
+    },
+    {
+      "tiou": 0.9523809523809523,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 60.700472831726074,
+      "found": [
+        [
+          47.0,
+          57.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터(소녀)가 파란 물웅덩이를 위에서 내려다보는 구도가 47초경부터 57초 전후까지 이어진다. 웅덩이 가장자리에 물방울 파문이 보이고 우산을 든 소녀가 웅덩이 위에 누워 있다. 57.5초 이후에는 옆에서 보는 장면으로 바뀐다. 다만 빗줄기는 이 구간에서 뚜렷하지 않고 파문과 우산의 빗방울 표현으로 비 오는 장면으로 판단했다. 구간 전체가 노래 구간이라 소리 근거는 없다."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 5
+    },
+    {
+      "tiou": 0.4230769230769231,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 149.61416840553284,
+      "found": [
+        [
+          95.0,
+          106.0
+        ]
+      ],
+      "reasons": [
+        [
+          "타자 17번(오타니)이 스윙하며 타구를 올려다보고 관중이 크게 환호하는 장면(약 97~99초), 이어서 베이스를 도는 모습, 전광판 'HOME RUN' 표시(약 101~103초), 더그아웃에서 동료와 하이파이브하는 장면(약 104~106초)이 이어집니다. 다만 공이 담장을 넘는 순간은 프레임에 명확히 잡히지 않았고, 타자가 오타니라는 점도 등번호 17 외에는 화면에서 확정하지 못했습니다. 받아쓰기는 이 구간에서 다른 타자의 삼진 중계이므로 음성으로는 확인되지 않습니다."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 75.19008708000183,
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_home_run",
+      "run": 2
+    },
+    {
+      "tiou": 0.36538461538461536,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 89.47432494163513,
+      "found": [
+        [
+          96.5,
+          106.0
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니(17번)가 스윙해 타구가 나간 직후(약 97~98초) 관중이 일어나 환호하고, 약 100초에 오타니가 베이스 쪽으로 달리며, 105초까지 더그아웃에서 동료와 축하를 나누는 장면이 이어집니다. 스코어는 Dodgers 3, Brewers 0. 담장을 넘는 공이나 홈플레이트를 밟는 장면은 프레임에서 확인되지 않아 홈런으로 확정할 수는 없고, 정황상 홈런일 가능성이 높은 구간입니다. 음성은 같은 시점의 다른 타석(Caleb Durbin 삼진) 중계입니다."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 3
+    },
+    {
+      "tiou": 0.3269230769230769,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 120.56232571601868,
+      "found": [
+        [
+          98.5,
+          107.0
+        ]
+      ],
+      "reasons": [
+        [
+          "타자가 배트를 내려놓고 베이스를 도는 홈런 주루(약 100s~101s), 전광판에 '17 OHTANI' 표기, 103s 무렵 하단 띠에 'HOME RUN!' 글자, 이후 더그아웃에서 17번 선수가 동료와 하이파이브하며 환호하는 장면(약 106s)이 이어짐. 음성은 다른 타자의 삼진 중계('Caleb Durbin strikes out')가 겹쳐 있어 음성 기록과는 어긋나지만, 화면 근거로 오타니 홈런 장면으로 판단함. 타구 자체의 담장 넘김은 프레임에서 명확히 확인되지 않음."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 4
+    },
+    {
+      "tiou": 0.48148148148148145,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 69.45127654075623,
+      "found": [
+        [
+          92.0,
+          106.0
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니(17번)가 타석에서 스윙한 뒤 관중이 일제히 일어나 환호하고(약 99초), 그 직후 오타니가 배트를 들고 달리며 프리먼이 머리를 감싸고 오타니가 더그아웃에서 동료와 환호하는 장면이 이어짐. 홈런으로 보이는 타격 장면이다. 다만 공이 담장을 넘는 순간은 프레임에서 직접 확인되지 않았고, 받아쓰기에도 홈런 언급이 없어 타구 결과는 화면 반응에 근거한 추정이다."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 5
+    },
+    {
+      "tiou": 0.8,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 41.070854902267456,
+      "found": [
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "reasons": [
+        [
+          "받아쓰기 0~20초에 기자가 Snell·Yamamoto를 언급하며 4차전에 몸을 어떻게 준비하는지, 포스트시즌에서 얼마나 몸을 밀어붙일 수 있는지 묻는 질문이 이어진다. 프레임 확인으로 질문 음성이 약 18.6~20.4초 사이에 끝나는 것을 확인했다. 오타니가 화면에 뚜렷이 잡히지는 않아 답변 구간은 포함하지 않았다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.8,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 27.555672645568848,
+      "found": [
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 오타니에게 Snell과 Yamamoto의 투구를 언급하며 4차전에 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 질문이 0~20초에 걸쳐 나옵니다. 받아쓰기 1·2번 윈도우(\"Shohei, given what we saw…\", \"How far do you think you could push yourself…\")와 프레임 확인 결과가 일치합니다. 오타니의 답변(20초 이후)은 질문 장면이 아니라 제외했습니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 2
+    },
+    {
+      "tiou": 0.8205128205128205,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 41.950199604034424,
+      "found": [
+        [
+          0.0,
+          19.5
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 \"Shohei\"라고 부르며 Snell·Yamamoto의 경기 운영을 언급하고 Game 4에서 몸 상태를 어떻게 준비하는지, 포스트시즌에서 얼마나 몸을 밀어붙일 수 있는지 묻는 질문이 0초부터 약 19초까지 이어집니다. 자막(\"given that it is the postseason now?\")이 질문의 끝을 보여주며, 20초 무렵부터 답변 장면으로 넘어갑니다. 답변 장면은 포함하지 않았습니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 3
+    },
+    {
+      "tiou": 0.8,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 35.80087471008301,
+      "found": [
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "reasons": [
+        [
+          "받아쓰기에서 기자가 오타니에게 \"Game 4에서 무엇을 물리적으로 준비하나\", \"포스트시즌에서 자신을 얼마나 밀어붙일 수 있나\"라고 묻는 음성이 0~20초에 걸쳐 나옵니다. 프레임에서도 질문 자막이 이 구간에 이어지고, 질문 음성은 약 20초 전후에 끝나는 것으로 확인됩니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 4
+    },
+    {
+      "tiou": 0.5333333333333333,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 54.122068881988525,
+      "found": [
+        [
+          0.0,
+          30.0
+        ]
+      ],
+      "reasons": [
+        [
+          "0~10초에 기자가 Snell, Yamamoto 이후 4차전을 위해 몸 상태를 어떻게 준비하는지 묻고, 10~20초에 포스트시즌에서 얼마나 몰아붙일 수 있는지 되묻습니다. 이 질문에 대한 답변 자막(\"so it would be great if I'm able to keep up…\", \"but it's more important…\")이 20~30초 사이에 이어집니다. 음성 기록은 '음성 없음'이지만 자막 내용이 질문의 답변에 해당합니다. 답변이 40초 무렵까지 이어질 가능성이 있어 끝 시각은 확정하지 못했고, 30초로 잡았습니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 5
+    },
+    {
+      "tiou": 0.8888888888888888,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 55.15162968635559,
+      "found": [
+        [
+          36.5,
+          44.5
+        ]
+      ],
+      "reasons": [
+        [
+          "하단 자막에 \"I think the most important thing for a starting pitcher is to not give up the first run.\"(선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이다)가 표시되는 구간입니다. 자막은 약 37초에 나타나 약 44초에 사라집니다. 음성 받아쓰기는 이 구간을 '음성 없음'으로 표시해 자막과 어긋나므로, 발화 여부는 자막 기준으로 판단했습니다."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 20.357017755508423,
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_first_run_answer",
+      "run": 2
+    },
+    {
+      "tiou": 0.7,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 63.46157646179199,
+      "found": [
+        [
+          38.0,
+          46.0
+        ]
+      ],
+      "reasons": [
+        [
+          "화면 자막 \"I think the most important thing for a starting pitcher is to not give up the first run.\"(선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것)이 나오는 구간. 자막은 약 38초경부터 나타나 45~46초 무렵까지 보입니다. 다만 프레임 확인 결과가 일부 엇갈려 시작·끝 시각은 대략적이며, 화자는 자막상 1인칭 발언이지만 화면만으로 오타니라고 확정하지는 못했습니다. 받아쓰기 윈도우 3~6은 음성 없음으로 표시되어 있어 자막 기준으로 판단했습니다."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 3
+    },
+    {
+      "tiou": 0.8095238095238095,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 64.10571360588074,
+      "found": [
+        [
+          36.5,
+          46.5
+        ]
+      ],
+      "reasons": [
+        [
+          "화면 자막 \"I think the most important thing for a starting pitcher is to not give up the first run.\"가 약 37초부터 46초 전후까지 표시됨. 요청의 '선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것'과 일치. 다만 음성 받아쓰기는 없고 화면 자막으로만 확인했으며, 등 뒤 'OHTANI' 표기로 투수가 오타니로 보이지만 발화자는 음성으로 확정하지 못함."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 4
+    },
+    {
+      "tiou": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 72.68652844429016,
+      "found": [
+        [
+          36.0,
+          45.0
+        ]
+      ],
+      "reasons": [
+        [
+          "화면 자막 \"I think the most important thing for a starting pitcher is to not give up the first run.\"이 약 36~45초 사이에 나타났다가 사라짐. 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라는 요청 내용과 일치. 다만 이 구간은 음성 기록이 없고 자막으로만 확인된 장면이며, 말하는 사람은 화면에 보이지 않음."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 5
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "code_version": "1dad02c+dirty",
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 4,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "chunk_count": 4
+  },
+  "cases": [
+    {
+      "name": "sintel_shaman_question",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳에 무슨 일로 왔는지 묻고, 신텔이 누군가를 찾고 있다고 답하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          127.0,
+          140.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_fool_unprepared",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 아무 준비 없이 혼자 다니다니 바보 같다고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          117.5,
+          124.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_good_night",
+      "video": "videos/blender/sintel.webm",
+      "request": "신텔이 아기 용 스케일스에게 잘 자라고 인사하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          227.5,
+          230.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_dragon_lands",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳은 용의 땅이고 생각보다 가까이 왔다고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          457.5,
+          462.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.33359422112164655,
+      "recall": 1.0,
+      "precision": 0.5,
+      "segment_count": 2,
+      "seconds": 73.71051001548767,
+      "input_tokens": 116402,
+      "output_tokens": 29932,
+      "tokens": {
+        "input": 32024,
+        "output": 29932,
+        "cache_write": 35384,
+        "cache_read": 48994
+      },
+      "found": [
+        [
+          121.0,
+          140.0
+        ],
+        [
+          444.0305,
+          464.0
+        ]
+      ],
+      "reasons": [
+        [
+          "주술사(화면 밖/클로즈업)가 \"So, what brings you to the land of the gatekeepers?\"라고 이곳에 무슨 일로 왔는지 묻고, 이어 신텔이 \"I'm searching for someone. Someone very dear?...\"라고 누군가를 찾고 있다고 답하는 장면. 질문은 약 122~128초, 신텔의 대답은 약 131~139초로 추정됨."
+        ],
+        [
+          "이 조각 시작(444s)에 주술사(수염 난 노인, 샤먼)가 등장하고, 464s 전까지 신텔에게 말을 건네는 대사(\"I have failed. You've only failed to see.\" / \"These are dragon lands, Sintel. You are closer than you know.\")가 있습니다. 요청된 장면의 뒷부분(주술사의 응답)에 해당합니다. 다만 주술사가 이곳에 온 이유를 묻는 질문과 신텔이 누군가를 찾는다고 답하는 대사는 이 조각의 받아쓰기와 프레임에서 확인되지 않았으므로, 앞부분은 이웃 조각(444s 이전)에 있을 가능성이 큽니다. 이웃 조각 결과와 합쳐서 판단해야 합니다."
+        ]
+      ],
+      "case": "sintel_shaman_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.17857142857142858,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 52.87317490577698,
+      "input_tokens": 70739,
+      "output_tokens": 18211,
+      "tokens": {
+        "input": 19028,
+        "output": 18211,
+        "cache_write": 26675,
+        "cache_read": 25036
+      },
+      "found": [
+        [
+          110.0,
+          120.0
+        ]
+      ],
+      "reasons": [
+        [
+          "윈도우 12의 대사 \"You're a fool for traveling alone so completely unprepared\"(준비 없이 혼자 다니는 건 바보 같다는 질책)가 약 111초부터 119초 무렵까지 나온다. 화면에서는 머리띠와 긴 수염의 노인(주술사로 추정)이 붉은 머리 여성(신텔로 추정) 쪽을 향해 말하는 모습이 확인된다. 다만 말하는 인물은 화면으로 단정하지 못했고, 주술사·신텔 여부는 복장과 장면 흐름으로 추정한 것이다."
+        ]
+      ],
+      "case": "sintel_fool_unprepared",
+      "run": 1
+    },
+    {
+      "tiou": 0.06252383721293744,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 2,
+      "seconds": 175.99671363830566,
+      "input_tokens": 322575,
+      "output_tokens": 49470,
+      "tokens": {
+        "input": 60492,
+        "output": 49470,
+        "cache_write": 48219,
+        "cache_read": 213864
+      },
+      "found": [
+        [
+          222.01525,
+          248.0
+        ],
+        [
+          526.0,
+          540.0
+        ]
+      ],
+      "reasons": [
+        [
+          "윈도우 1 받아쓰기에 \"Good night, Scales.\"가 있고, 이어지는 222~248초 프레임에서 어두운 침대/실내에 여성 인물과 큰 용(스케일스로 보이는 존재)이 함께 나온다. 여성이 용 쪽으로 손을 뻗는 정적인 장면이며 247~249초 사이에 닭 추격 장면으로 바뀐다. 다만 해당 구간이 음악 구간으로 표시되어 인사 대사의 화자는 받아쓰기로 확정되지 않았고, 인물 식별도 화면이 어두워 확실하지 않다."
+        ],
+        [
+          "신텔이 파란 천 위에 누운 아기 용 스케일스(눈을 감고 잠든 듯한 모습) 곁으로 다가가 몸을 숙이고, 손을 용의 날개와 머리 부근에 대어 쓰다듬는 장면입니다. 다만 이 구간은 음성 없음으로 기록되어 있어 '잘 자라' 같은 인사 대사는 받아쓰기로 확인되지 않았고, 인사로 보이는 것은 잠든 용을 돌보는 손짓 장면입니다."
+        ]
+      ],
+      "case": "sintel_good_night",
+      "run": 1
+    },
+    {
+      "tiou": 0.4166666666666667,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 65.20838475227356,
+      "input_tokens": 78410,
+      "output_tokens": 19752,
+      "tokens": {
+        "input": 15686,
+        "output": 19752,
+        "cache_write": 27544,
+        "cache_read": 35180
+      },
+      "found": [
+        [
+          453.0,
+          465.0
+        ]
+      ],
+      "reasons": [
+        [
+          "받아쓰기에 \"These are dragon lands, Sintel. You are closer than you know.\"가 454초 무렵부터 463초 무렵까지 나오고, 그 직전 대사(\"I have failed...\")는 주술사 화면과 겹칩니다. 프레임에서도 주술사와 신텔이 함께 또는 번갈아 나오며 대사가 이어집니다. 다만 화자는 소리만으로 확정되지 않았고, 대사 시작 시각은 프레임으로 정확히 특정되지 않아 근사치입니다."
+        ]
+      ],
+      "case": "sintel_dragon_lands",
+      "run": 1
+    }
+  ]
+}

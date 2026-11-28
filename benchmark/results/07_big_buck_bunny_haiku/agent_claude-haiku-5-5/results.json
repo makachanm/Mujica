@@ -1,0 +1,218 @@
+{
+  "code_version": "1dad02c+dirty",
+  "agent_model": "claude-haiku-5-5",
+  "cases": [
+    {
+      "name": "bbb_bow_making",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "토끼가 나뭇가지를 깎아 활과 화살을 만드는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          251.0,
+          265.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_spike_trap",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 뾰족한 말뚝 함정 위의 나뭇가지에 매달려 있는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          445.0,
+          452.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_flying_squirrel",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          424.0,
+          426.0
+        ],
+        [
+          429.0,
+          431.0
+        ],
+        [
+          434.0,
+          440.0
+        ],
+        [
+          482.0,
+          484.0
+        ],
+        [
+          580.5,
+          596.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.25225225225225223,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 3,
+      "seconds": 168.81650495529175,
+      "input_tokens": 203150,
+      "output_tokens": 9995,
+      "tokens": {
+        "input": 34,
+        "output": 9995,
+        "cache_write": 27694,
+        "cache_read": 175422
+      },
+      "cost_usd": 0.010216870000000001,
+      "turns": 24,
+      "clip_count": 3,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 40.5
+        },
+        {
+          "name": "clip_2.mp4",
+          "seconds": 7.0
+        },
+        {
+          "name": "clip_3.mp4",
+          "seconds": 8.0
+        }
+      ],
+      "found": [
+        [
+          244.0,
+          284.5
+        ],
+        [
+          293.0,
+          300.0
+        ],
+        [
+          315.0,
+          323.0
+        ]
+      ],
+      "answer": "요청한 장면을 3개 구간에서 찾아 잘라 `clips` 폴더에 저장했습니다.\n\n- `clip_1.mp4` (244~284.5초, 약 40.5초): 숲에서 토끼가 막대를 깎아 활을 만들고 활줄을 거는 장면입니다. 뾰족한 화살도 함께 나옵니다.\n- `clip_2.mp4` (293~300초, 7초): 토끼가 막대를 다듬는 장면입니다.\n- `clip_3.mp4` (315~323초, 8초): 토끼가 막대를 깎는 장면입니다.\n\n이 구간들은 음성이 없어서 받아쓰기 도구로는 확인하지 못했고, 프레임 이미지만 보고 판단했습니다. 특히 clip_2와 clip_3은 화살을 만드는 과정인지 확신할 수 없습니다. 경계는 1초 단위로 확인했습니다.\n\n{\"segments\": [[244, 284.5], [293, 300], [315, 323]]}",
+      "case": "bbb_bow_making",
+      "run": 1
+    },
+    {
+      "tiou": 0.8571428571428571,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 68.30831503868103,
+      "input_tokens": 112926,
+      "output_tokens": 5665,
+      "tokens": {
+        "input": 24,
+        "output": 5665,
+        "cache_write": 18515,
+        "cache_read": 94387
+      },
+      "cost_usd": 0.006093145,
+      "turns": 18,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 6.0
+        }
+      ],
+      "found": [
+        [
+          446.0,
+          452.0
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 1개를 찾았고, `clips/clip_1.mp4`로 저장했습니다(446초 ~ 452초, 약 6초).\n\n장면 내용: 날다람쥐가 뾰족한 가시 말뚝 함정 위 나뭇가지에 매달려 있다가, 452초 무렵 가지 위로 이동합니다. 시작 시점은 0.5초 간격 프레임으로 확인했고, 경계는 프레임 기준 ±0.5초 정도의 오차가 있을 수 있습니다.\n\n참고로 받아쓰기 도구는 430~470초, 500초 구간 요청 모두 서버 오류(500)를 반환해서 음성 확인은 하지 못했고, 판단은 영상 프레임만 근거로 했습니다.\n\n{\"segments\": [[446.0, 452.0]]}",
+      "case": "bbb_spike_trap",
+      "run": 1
+    },
+    {
+      "tiou": 0.203125,
+      "recall": 0.6,
+      "precision": 0.5,
+      "segment_count": 6,
+      "seconds": 111.15985465049744,
+      "input_tokens": 271217,
+      "output_tokens": 14129,
+      "tokens": {
+        "input": 32,
+        "output": 14129,
+        "cache_write": 32766,
+        "cache_read": 238419
+      },
+      "cost_usd": 0.013547640000000003,
+      "turns": 23,
+      "clip_count": 6,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 1.5
+        },
+        {
+          "name": "clip_2.mp4",
+          "seconds": 2.0
+        },
+        {
+          "name": "clip_3.mp4",
+          "seconds": 1.5
+        },
+        {
+          "name": "clip_4.mp4",
+          "seconds": 1.0
+        },
+        {
+          "name": "clip_5.mp4",
+          "seconds": 1.5
+        },
+        {
+          "name": "clip_6.mp4",
+          "seconds": 3.0
+        }
+      ],
+      "found": [
+        [
+          402.5,
+          404.0
+        ],
+        [
+          408.0,
+          410.0
+        ],
+        [
+          424.5,
+          426.0
+        ],
+        [
+          429.5,
+          430.5
+        ],
+        [
+          433.5,
+          435.0
+        ],
+        [
+          436.5,
+          439.5
+        ]
+      ],
+      "answer": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면을 6개 찾아 `clips` 폴더에 저장했습니다. 음성 받아쓰기는 대부분 서버 오류가 나거나 같은 문장이 반복되어 쓸 수 없었기 때문에, 장면은 화면을 직접 확인해서 찾았습니다.\n\n- clip_1.mp4: 402.5–404.0초, 가지에서 뛰어올라 활공 후 착지\n- clip_2.mp4: 408.0–410.0초, 하늘을 가로지르는 활공\n- clip_3.mp4: 424.5–426.0초, 하늘 활공\n- clip_4.mp4: 429.5–430.5초, 활공\n- clip_5.mp4: 433.5–435.0초, 활공\n- clip_6.mp4: 436.5–439.5초, 다리를 옆으로 펴고 활공\n\n실제 장면 경계는 0.5초 간격 프레임으로 확인했으므로 오차가 있을 수 있습니다. 또 438~441초 부근에 멀리서 날아가는 작은 날다람쥐가 나오는데, 다리를 펴고 있는지 확실하지 않아 포함하지 않았습니다. 399초 부근의 짧은 도약도 제외했습니다.\n\n{\"segments\": [[402.5, 404.0], [408.0, 410.0], [424.5, 426.0], [429.5, 430.5], [433.5, 435.0], [436.5, 439.5]]}",
+      "case": "bbb_flying_squirrel",
+      "run": 1
+    }
+  ]
+}

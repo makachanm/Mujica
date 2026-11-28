@@ -1,0 +1,711 @@
+{
+  "code_version": "1dad02c",
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 1,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5"
+  },
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "testdata/testdata1.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "testdata/testdata2.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 37.5653133392334,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "전 구간 노래가 흐르는 애니메이션풍 일러스트 영상이고 중간에 시청 감사 인사가 있어 엔딩곡 장면으로 판단"
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 33.66931104660034,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체가 노래가 나오는 애니메이션 엔딩 영상이고, 중간에 \"ご視聴ありがとうございました\" 문구가 나옵니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 2
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 37.24178624153137,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "전 구간 노래가 흐르는 일러스트 엔딩 영상 연출이며 시청 감사 문구가 있음"
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 3
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 37.04670000076294,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체가 노래에 맞춰 일러스트 컷이 이어지는 애니메이션 엔딩풍 영상이며 마지막에 시청 감사 문구가 나옴"
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 4
+    },
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 36.80262851715088,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체가 노래와 함께 이어지는 애니메이션 엔딩 영상이며, 끝부분에 시청 감사 인사가 나옵니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 5
+    },
+    {
+      "tiou": 0.93,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 38.02168345451355,
+      "found": [
+        [
+          17.2,
+          26.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 공룡 후드 의상을 입고 등장하는 장면"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.6300000000000001,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 31.429505348205566,
+      "found": [
+        [
+          20.0,
+          26.3
+        ]
+      ],
+      "reasons": [
+        [
+          "공룡 착ぐるみ를 입은 캐릭터가 보이는 장면"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 2
+    },
+    {
+      "tiou": 0.5899999999999999,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 33.026626110076904,
+      "found": [
+        [
+          20.3,
+          26.2
+        ]
+      ],
+      "reasons": [
+        [
+          "공룡 후드 옷을 입은 캐릭터가 등장하는 장면"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 3
+    },
+    {
+      "tiou": 0.9607843137254903,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 46.59996032714844,
+      "found": [
+        [
+          16.8,
+          26.8
+        ]
+      ],
+      "reasons": [
+        [
+          "하트 액자 안에서 캐릭터가 공룡 옷(착그루미)을 입고 앉고 춤추며 불을 뿜는 장면"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 4
+    },
+    {
+      "tiou": 0.65,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 32.856361627578735,
+      "found": [
+        [
+          20.0,
+          26.5
+        ]
+      ],
+      "reasons": [
+        [
+          "공룡 후드 의상을 입은 캐릭터가 등장"
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 5
+    },
+    {
+      "tiou": 0.85,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 40.7997624874115,
+      "found": [
+        [
+          48.0,
+          56.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터 다리가 위에 보이고 아래 웅덩이에 우산 쓴 모습이 비치며 파문이 이는, 웅덩이를 내려다보는 구도"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.6666666666666666,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 32.97544884681702,
+      "found": [
+        [
+          50.0,
+          57.5
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 서서 웅덩이(우산 쓴 모습이 비침)를 내려다보는 장면"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 2
+    },
+    {
+      "tiou": 0.9899999999999999,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 39.23661684989929,
+      "found": [
+        [
+          47.1,
+          57.0
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터의 다리가 위에 보이고 아래 웅덩이에 우산 든 모습이 비치는 장면"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 3
+    },
+    {
+      "tiou": 0.8299999999999997,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 31.054197549819946,
+      "found": [
+        [
+          48.5,
+          56.8
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 위에 서서 아래 웅덩이에 비친 우산 쓴 모습을 내려다보는 장면"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 4
+    },
+    {
+      "tiou": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 28.88379216194153,
+      "found": [
+        [
+          47.0,
+          57.0
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 서서 웅덩이를 내려다보는 구도, 웅덩이에 거꾸로 비친 모습"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 5
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 61.961530923843384,
+      "found": [
+        [
+          123.0,
+          130.0
+        ]
+      ],
+      "reasons": [
+        [
+          "17번 오타니가 스윙 후 타구를 바라보고 관중이 환호하는 홈런 추정 장면. 타구가 담장을 넘는 모습은 직접 확인하지 못했음."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.3582089552238806,
+      "recall": 0.5,
+      "precision": 0.5,
+      "segment_count": 2,
+      "seconds": 79.45533299446106,
+      "found": [
+        [
+          94.0,
+          106.0
+        ],
+        [
+          124.0,
+          131.5
+        ]
+      ],
+      "reasons": [
+        [
+          "17번 OHTANI 자막 타자가 스윙, 관중 환호, \"HOME RUN!\" 자막과 더그아웃 축하가 이어짐."
+        ],
+        [
+          "17번 다저스 타자가 풀스윙하고 타구가 멀리 뜨며 관중이 환호함. 홈런 가능성이 높지만 확정 자막은 없음."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 2
+    },
+    {
+      "tiou": 0.17142857142857143,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 2,
+      "seconds": 77.26927614212036,
+      "found": [
+        [
+          95.0,
+          101.0
+        ],
+        [
+          125.5,
+          134.5
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니(17번) 스윙 후 타구를 바라보고 관중이 일어나 환호함. 홈런으로 추정되며 스코어 0-3."
+        ],
+        [
+          "17번 타자 스윙 후 타구를 지켜보고 관중이 환호하며 불꽃이 터짐. 홈런으로 추정됨."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 3
+    },
+    {
+      "tiou": 0.5384615384615384,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 53.08685803413391,
+      "found": [
+        [
+          93.0,
+          107.0
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니 17번이 타석에서 스윙해 타구를 지켜보고, \"HOME RUN!\" 전광판이 뜨고 더그아웃에서 축하받는 장면까지 이어진다."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 4
+    },
+    {
+      "tiou": 0.4423076923076923,
+      "recall": 0.5,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 59.6630802154541,
+      "found": [
+        [
+          93.0,
+          104.5
+        ]
+      ],
+      "reasons": [
+        [
+          "오타니(17번)가 타석에서 스윙해 타구를 바라보고, 외야 스탠드와 'HOME RUN!' 표시가 나오는 홈런 장면."
+        ]
+      ],
+      "case": "ohtani_home_run",
+      "run": 5
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 23.3184072971344,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 4차전에서 신체적으로 어디까지 준비/끌어올릴 수 있는지 오타니에게 묻는 질문 음성 구간"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 22.161737203598022,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 4차전에서 신체적으로 어디까지 준비/끌어올릴 수 있는지 묻는 질문 구간"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 2
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 23.411327123641968,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 오타니에게 4차전을 앞두고 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 질문 음성 구간"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 3
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 22.443838596343994,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 4차전을 앞두고 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 질문 음성 구간"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 4
+    },
+    {
+      "tiou": 0.8421052631578947,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 22.797881603240967,
+      "found": [
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 오타니에게 4차전에서 신체적으로 어디까지 밀어붙일 수 있는지 묻는 질문 구간"
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 5
+    },
+    {
+      "tiou": 0.8888888888888888,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 39.220526695251465,
+      "found": [
+        [
+          36.5,
+          44.5
+        ]
+      ],
+      "reasons": [
+        [
+          "자막에 오타니의 \"선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것\" 발언이 표시됨"
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    },
+    {
+      "tiou": 0.8411214953271026,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 46.32066512107849,
+      "found": [
+        [
+          35.5,
+          46.2
+        ]
+      ],
+      "reasons": [
+        [
+          "자막으로 선발 투수에게 가장 중요한 것은 첫 실점을 하지 않는 것이라는 발언이 표시되는 구간"
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 2
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 26.1747784614563,
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_first_run_answer",
+      "run": 3
+    },
+    {
+      "tiou": 0.9444444444444444,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 45.76902484893799,
+      "found": [
+        [
+          36.0,
+          44.5
+        ]
+      ],
+      "reasons": [
+        [
+          "Subtitle shows Ohtani's answer: most important thing for a starting pitcher is to not give up the first run."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 4
+    },
+    {
+      "tiou": 0.75,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 31.393468379974365,
+      "found": [
+        [
+          34.0,
+          46.0
+        ]
+      ],
+      "reasons": [
+        [
+          "Subtitle: \"most important thing for a starting pitcher is to not give up the first run,\" shown ~35-46s."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 5
+    }
+  ]
+}

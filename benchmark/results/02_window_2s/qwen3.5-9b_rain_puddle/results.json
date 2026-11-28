@@ -1,0 +1,55 @@
+{
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "qwen3.5:9b",
+    "vision_model": "qwen3.5:9b",
+    "chunk_count": 1,
+    "window_seconds": 2.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true,
+    "anthropic_api_key": ""
+  },
+  "overrides": {
+    "window_seconds": 2.0
+  },
+  "cases": [
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.12,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 149.52014422416687,
+      "found": [
+        [
+          54.0,
+          72.0
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 비 오는 우산을 쓰고 웅덩이를 내려다보는 장면이 이어짐 (윈도우 19~28)"
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    }
+  ]
+}

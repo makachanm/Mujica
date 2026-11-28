@@ -1,0 +1,297 @@
+{
+  "code_version": "1dad02c+dirty",
+  "agent_model": "claude-haiku-5-5",
+  "with_whisper": false,
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "videos/anime_ending.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "videos/anime_ending.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "videos/anime_ending.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.486126526082131,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 59.765297651290894,
+      "input_tokens": 152817,
+      "output_tokens": 6264,
+      "tokens": {
+        "input": 34,
+        "output": 6264,
+        "cache_write": 21081,
+        "cache_read": 131702
+      },
+      "cost_usd": 0.007087545,
+      "turns": 16,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 44.894438
+        }
+      ],
+      "found": [
+        [
+          45.2,
+          90.1
+        ]
+      ],
+      "answer": "애니메이션 엔딩곡 장면으로 보이는 구간을 하나 찾아 `clips/clip_1.mp4`로 저장했습니다. 길이는 약 44.9초입니다.\n\n- **구간:** 45.2초 ~ 90.1초 (영상 끝까지)\n- **근거:** 약 45초에 패널이 닫히는 전환이 있고, 그 뒤로 비 오는 밤 장면이 이어집니다. 마지막에는 별이 빛나는 하늘을 바라보는 장면으로 끝납니다. 앞부분의 밝은 장면들과 분위기가 확연히 달라서 후반부 전체를 하나의 엔딩 구간으로 판단했습니다.\n- **한계:** 오디오가 처음부터 끝까지 끊김 없이 이어져서, 음악으로 엔딩곡 구간을 확정하지는 못했습니다. 노래 자체를 식별하지 않았으므로 엔딩곡이 정확히 이 구간인지는 확인되지 않았습니다. 시작 시각도 프레임 기준 근사값입니다.\n\n{\"segments\": [[45.2, 90.1]]}",
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.8461538461538464,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 30.017189264297485,
+      "input_tokens": 98574,
+      "output_tokens": 3765,
+      "tokens": {
+        "input": 24,
+        "output": 3765,
+        "cache_write": 18367,
+        "cache_read": 80183
+      },
+      "cost_usd": 0.004982605,
+      "turns": 17,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 9.216212
+        }
+      ],
+      "found": [
+        [
+          16.6,
+          25.8
+        ]
+      ],
+      "answer": "공룡 옷을 입은 장면은 1개 구간으로 확인되었고, `clips/clip_1.mp4`(약 9.2초)로 저장했습니다. 나머지 구간에서는 해당 장면이 보이지 않았습니다.\n\n{\"segments\": [[16.6, 25.8]]}",
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.9799999999999998,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 64.41499853134155,
+      "input_tokens": 237586,
+      "output_tokens": 9078,
+      "tokens": {
+        "input": 34,
+        "output": 9078,
+        "cache_write": 29396,
+        "cache_read": 208156
+      },
+      "cost_usd": 0.010298459999999999,
+      "turns": 22,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 9.800045
+        }
+      ],
+      "found": [
+        [
+          47.0,
+          56.8
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 하나였고, `clips/clip_1.mp4`로 저장했습니다(약 9.8초, 47.0~56.8초 구간).\n\n장면 확인 내용:\n- **약 47.0~56.8초**: 캐릭터(우산을 든 모습)가 위에서 빗물 웅덩이를 내려다보는 장면입니다. 웅덩이에 빗방울 파문이 계속 생기고, 56.8초쯤 웅덩이가 갈라지며 장면이 바뀝니다.\n- **약 57~65초**: 우산을 쓰고 옆모습으로 걸어가는 장면이라 제외했습니다.\n- **약 9~27초**: 창밖 빗줄기와 책상에 엎드린 캐릭터 장면이라 웅덩이가 아니므로 제외했습니다.\n\n{\"segments\": [[47.0, 56.8]]}",
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.7037037037037037,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 2,
+      "seconds": 191.99006915092468,
+      "input_tokens": 689388,
+      "output_tokens": 22426,
+      "tokens": {
+        "input": 60,
+        "output": 22426,
+        "cache_write": 54995,
+        "cache_read": 634333
+      },
+      "cost_usd": 0.024436704999999996,
+      "turns": 33,
+      "clip_count": 2,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 8.006817
+        },
+        {
+          "name": "clip_2.mp4",
+          "seconds": 12.010226
+        }
+      ],
+      "found": [
+        [
+          64.0,
+          72.0
+        ],
+        [
+          94.0,
+          106.0
+        ]
+      ],
+      "answer": "홈런 장면을 두 곳에서 찾아 잘라 저장했습니다. `clips/clip_1.mp4`(약 64~72초, 8초)는 오타니 타석의 스윙부터 베이스를 돌아 동료와 맞이하는 장면까지, `clips/clip_2.mp4`(약 94~106초, 12초)는 타석에서 스윙, 타구를 올려다보는 장면, \"HOME RUN\" 배너, 더그아웃 환호까지 담았습니다. 장면 경계는 프레임 확인에 따라 대략 ±0.5초 정도 오차가 있을 수 있습니다.\n\n{\"segments\": [[64.0, 72.0], [94.0, 106.0]]}",
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.99252801992528,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 436.70749068260193,
+      "input_tokens": 292760,
+      "output_tokens": 13443,
+      "tokens": {
+        "input": 48,
+        "output": 13443,
+        "cache_write": 26511,
+        "cache_read": 266201
+      },
+      "cost_usd": 0.012702185000000003,
+      "turns": 23,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 16.013634
+        }
+      ],
+      "found": [
+        [
+          1.74,
+          17.74
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 하나만 찾았고, `clips/clip_1.mp4`로 저장했습니다(길이 약 16.0초, 영상+음성 포함).\n\n장면 내용: 기자가 \"4차전을 위해 신체적으로 무엇을 준비할 수 있나요?\", \"포스트시즌인 지금, 얼마나 자신을 몰아붙일 수 있다고 생각하나요?\"라고 묻는 질문 구간입니다. 오타니의 답변은 약 18초부터 시작하므로 제외했습니다.\n\n참고로 작업 중에 `/tmp/frames` 폴더(원래 있던 폴더)의 `f_1.jpg`, `f_5.jpg`, `f_10.jpg` … `f_50.jpg` 파일을 제가 만든 프레임 이미지로 덮어썼을 수 있습니다. 분석 대상 폴더 밖이지만, 필요한 파일이라면 확인해 주세요.\n\n{\"segments\": [[1.74, 17.74]]}",
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.5,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 468.8229899406433,
+      "input_tokens": 212105,
+      "output_tokens": 8861,
+      "tokens": {
+        "input": 44,
+        "output": 8861,
+        "cache_write": 18707,
+        "cache_read": 193354
+      },
+      "cost_usd": 0.008706815,
+      "turns": 20,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 15.012782
+        }
+      ],
+      "found": [
+        [
+          29.0,
+          44.0
+        ]
+      ],
+      "answer": "요청에 맞는 장면을 찾아 `clips/clip_1.mp4`로 저장했습니다(약 15초).\n\n- 해당 장면: 일본어 음성 약 29.2~43.5초. 영어 자막은 \"I think the most important thing for a starting pitcher is to not give up the first run\"입니다.\n- 잘라낸 구간: 29.0초~44.0초(앞뒤 여유 포함).\n- 같은 내용의 장면은 영상에서 이 한 곳뿐이었습니다.\n- 확인하지 못한 점: 화면에는 포수와 투수가 주로 나와서 발언자가 오타니인지는 확실하지 않습니다. 일본어 음성과 등번호 장면을 근거로 한 추정입니다.\n\n{\"segments\": [[29.0, 44.0]]}",
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    }
+  ]
+}

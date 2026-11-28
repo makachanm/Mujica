@@ -1,0 +1,139 @@
+{
+  "code_version": "1dad02c+dirty",
+  "agent_model": "claude-haiku-5-5",
+  "with_whisper": false,
+  "cases": [
+    {
+      "name": "sintel_shaman_question",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳에 무슨 일로 왔는지 묻고, 신텔이 누군가를 찾고 있다고 답하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          127.0,
+          140.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_fool_unprepared",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 아무 준비 없이 혼자 다니다니 바보 같다고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          117.5,
+          124.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_good_night",
+      "video": "videos/blender/sintel.webm",
+      "request": "신텔이 아기 용 스케일스에게 잘 자라고 인사하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          227.5,
+          230.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_dragon_lands",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳은 용의 땅이고 생각보다 가까이 왔다고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          457.5,
+          462.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "error": "600초 시간 제한을 넘김",
+      "seconds": 600.135852098465,
+      "case": "sintel_shaman_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.1979896436186414,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 489.43493700027466,
+      "input_tokens": 90120,
+      "output_tokens": 5850,
+      "tokens": {
+        "input": 32,
+        "output": 5850,
+        "cache_write": 9356,
+        "cache_read": 80732
+      },
+      "cost_usd": 0.00490502,
+      "turns": 16,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 32.833333
+        }
+      ],
+      "found": [
+        [
+          101.25,
+          134.08
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 한 곳(101.25초~134.08초)에서 찾았고, `clips/clip_1.mp4`로 저장했습니다(길이 약 32.8초).\n\n참고로 음성 인식(영어 대사)과 장면 전환 검출로 찾은 결과입니다. 해당 대사는 117.7초~121.3초에 나오며, 전사에서 장면 안의 다른 대사는 신텔이 등장하는 것과 맞아 떨어집니다. 다만 발화자가 주술사인지는 음성만으로 확정하지 못했고, 프레임(113초, 119초)으로 보면 장면 속 인물 구성은 맞는 것으로 보입니다. 원래 폴더의 `video.webm`은 수정하지 않았습니다.\n\n{\"segments\": [[101.25, 134.08]]}",
+      "case": "sintel_fool_unprepared",
+      "run": 1
+    },
+    {
+      "tiou": 0.0686511423550088,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 99.61572670936584,
+      "input_tokens": 158764,
+      "output_tokens": 7201,
+      "tokens": {
+        "input": 22,
+        "output": 7201,
+        "cache_write": 28132,
+        "cache_read": 130610
+      },
+      "cost_usd": 0.008425299999999998,
+      "turns": 15,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 36.416667
+        }
+      ],
+      "found": [
+        [
+          211.792,
+          248.208
+        ]
+      ],
+      "answer": "신텔이 스케일스(아기 용)를 안고 잠자리에 드는 장면을 찾아 1개 클립으로 저장했습니다: `clips/clip_1.mp4` (약 36.4초).\n\n이 영상은 Sintel 애니메이션이고, 대사를 인식할 도구(음성 인식)가 없어서 인사 대사를 직접 듣고 확인하지는 못했습니다. 대신 화면을 확인했습니다. 약 211.8초부터 신텔이 불가 옆에서 웃으며 스케일스를 안고 있다가, 어두운 잠자리에서 스케일스와 함께 눕는 장면(약 248.2초까지)이 이어집니다. 잘 자라는 인사는 이 흐름 안에 있을 가능성이 높지만, 대사로 확인된 것은 아닙니다. 다른 장면이 더 맞다면 알려 주세요.\n\n{\"segments\": [[211.792, 248.208]]}",
+      "case": "sintel_good_night",
+      "run": 1
+    },
+    {
+      "error": "600초 시간 제한을 넘김",
+      "seconds": 600.1458587646484,
+      "case": "sintel_dragon_lands",
+      "run": 1
+    }
+  ]
+}

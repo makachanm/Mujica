@@ -1,0 +1,266 @@
+{
+  "code_version": "1dad02c+dirty",
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 1,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "chunk_count": 1
+  },
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "videos/anime_ending.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "videos/anime_ending.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "videos/anime_ending.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "videos/ohtani_nlcs.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 57.769474267959595,
+      "input_tokens": 30144,
+      "output_tokens": 5901,
+      "tokens": {
+        "input": 7271,
+        "output": 5901,
+        "cache_write": 7270,
+        "cache_read": 15603
+      },
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "조각 전체(윈도우 1~10)가 노래·음악 구간으로 표시되어 있고, 대사 받아쓰기가 없습니다. 일러스트가 장면마다 바뀌는 음악 연출이며, 마지막 윈도우에서도 장면 전환이 없습니다. 다만 화면에 엔딩 크레딧 자막은 확인되지 않았고 'ご視聴ありがとうございました'는 화면 자막 없이 음성에만 나옵니다. 그래서 엔딩곡이라고 확정하기는 어렵고, 이 조각 전체가 노래 구간이라는 점에서 엔딩곡 후보로 제출합니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.9803921568627452,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 61.375982999801636,
+      "input_tokens": 63983,
+      "output_tokens": 8014,
+      "tokens": {
+        "input": 17169,
+        "output": 8014,
+        "cache_write": 9395,
+        "cache_read": 37419
+      },
+      "found": [
+        [
+          16.8,
+          27.0
+        ]
+      ],
+      "reasons": [
+        [
+          "흰 후드에 등지느러미 장식과 꼬리가 달린 공룡 옷을 입은 캐릭터가 16.8초경 처음 나타나 26~27초경 화면 밖으로 벗어날 때까지 이어집니다. 전 구간이 노래 구간이라 음성 근거는 없고 화면 프레임으로 판단했습니다."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.8636363636363636,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 75.50834774971008,
+      "input_tokens": 64711,
+      "output_tokens": 9813,
+      "tokens": {
+        "input": 16253,
+        "output": 9813,
+        "cache_write": 9170,
+        "cache_read": 39288
+      },
+      "found": [
+        [
+          47.5,
+          58.0
+        ]
+      ],
+      "reasons": [
+        [
+          "위에서 내려다본 파란 타원형 물웅덩이 안에 캐릭터가 누워 있고, 물결 파문이 번지는 장면이 약 48초부터 58초 직전까지 이어집니다. 58초 이후에는 우산 든 소녀 장면으로 바뀝니다. 모든 윈도우가 노래 구간으로 표시되어 소리로는 판단하지 않았고, 화면 프레임으로 확인했습니다. 빗물이 뚜렷하지 않아 '비 오는' 조건은 완전히 확인되지 않았습니다."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 115.74161410331726,
+      "input_tokens": 63749,
+      "output_tokens": 17856,
+      "tokens": {
+        "input": 19346,
+        "output": 17856,
+        "cache_write": 12880,
+        "cache_read": 31523
+      },
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.7441860465116279,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 31.370035648345947,
+      "input_tokens": 18960,
+      "output_tokens": 3557,
+      "tokens": {
+        "input": 3198,
+        "output": 3557,
+        "cache_write": 6049,
+        "cache_read": 9713
+      },
+      "found": [
+        [
+          0.0,
+          21.5
+        ]
+      ],
+      "reasons": [
+        [
+          "받아쓰기에 기자가 \"Shohei, given what we saw from Snell and Yamamoto... for Game 4, what are you prepared to do physically?\"라고 묻고, 이어서 \"How far do you think you could push yourself given that it is the postseason now?\"라고 묻는 내용이 0~20초 구간에 걸쳐 있습니다. 프레임 확인에서도 질문이 0초 근처부터 약 20~22초까지 이어지는 것으로 보였습니다. 다만 오타니의 답변 장면은 이 구간에서 확인되지 않았습니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.8888888888888888,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 62.63013815879822,
+      "input_tokens": 49821,
+      "output_tokens": 9127,
+      "tokens": {
+        "input": 12653,
+        "output": 9127,
+        "cache_write": 9148,
+        "cache_read": 28020
+      },
+      "found": [
+        [
+          36.5,
+          44.5
+        ]
+      ],
+      "reasons": [
+        [
+          "화면 자막에 \"I think the most important thing for a starting pitcher is to not give up the first run.\"(선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것)이 나오는 구간. 자막은 약 35.7~37.1초 사이에 나타나 43.9~45.3초 사이에 사라지므로 그 사이로 잡았다. 인터뷰 화면은 아니고 경기 영상 위 자막이며, 발화 시점은 자막 기준 근사치다."
+        ]
+      ],
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    }
+  ]
+}

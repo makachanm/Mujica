@@ -1,0 +1,207 @@
+{
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "qwen3.5:9b",
+    "vision_model": "qwen3.5:9b",
+    "anthropic_api_key": "",
+    "chunk_count": 1,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "qwen3.5:9b",
+    "vision_model": "qwen3.5:9b"
+  },
+  "cases": [
+    {
+      "name": "anime_ending_song",
+      "video": "testdata/testdata1.webm",
+      "request": "애니메이션 엔딩곡이 나오는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          0.0,
+          89.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_dinosaur",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "testdata/testdata2.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_first_run_answer",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          36.0,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9877913429522753,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 96.5836660861969,
+      "found": [
+        [
+          0.0,
+          90.1
+        ]
+      ],
+      "reasons": [
+        [
+          "윈도우 1~9 모두 \"(노래 구간)\"으로 표시되어 있으며, look_at_frames 결과 모든 프레임에서 노래가 흐르고 있습니다. 윈도우 10은 음성 없음이지만, 엔딩곡의 끝부분일 수 있으므로 전체 범위를 제출합니다."
+        ]
+      ],
+      "case": "anime_ending_song",
+      "run": 1
+    },
+    {
+      "tiou": 0.5,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 39.031376361846924,
+      "found": [
+        [
+          20.6,
+          25.6
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 하얀색 공룡 모양의 옷을 입고 있는 장면입니다. 20.6초에서 25.6초까지 지속됩니다."
+        ]
+      ],
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 0.5765765765765763,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 30.974501848220825,
+      "found": [
+        [
+          50.6,
+          58.1
+        ]
+      ],
+      "reasons": [
+        [
+          "캐릭터가 비 오는 웅덩이를 내려다보는 장면이 50.6 초부터 58.1 초까지 이어짐. 화면에는 비, 물웅덩이, 캐릭터의 모습이 모두 포함되어 있음."
+        ]
+      ],
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 31.1636643409729,
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.8080808080808082,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 116.11637687683105,
+      "found": [
+        [
+          0.0,
+          19.8
+        ]
+      ],
+      "reasons": [
+        [
+          "기자가 오타니에게 \"4 차전 몸을 얼마나 끌어올릴 수 있는지\"를 묻는 인터뷰 장면입니다."
+        ]
+      ],
+      "case": "ohtani_interview_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 70.1368339061737,
+      "found": [],
+      "reasons": [],
+      "case": "ohtani_first_run_answer",
+      "run": 1
+    }
+  ]
+}

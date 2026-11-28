@@ -1,0 +1,445 @@
+{
+  "code_version": "1dad02c+dirty",
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 4,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-haiku-5-5",
+    "vision_model": "claude-haiku-5-5",
+    "chunk_count": 4
+  },
+  "cases": [
+    {
+      "name": "bbb_bow_making",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "토끼가 나뭇가지를 깎아 활과 화살을 만드는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          251.0,
+          265.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_spike_trap",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 뾰족한 말뚝 함정 위의 나뭇가지에 매달려 있는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          445.0,
+          452.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_flying_squirrel",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          424.0,
+          426.0
+        ],
+        [
+          429.0,
+          431.0
+        ],
+        [
+          434.0,
+          440.0
+        ],
+        [
+          482.0,
+          484.0
+        ],
+        [
+          580.5,
+          596.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_flame",
+      "video": "videos/blender/spring.webm",
+      "request": "소녀가 두 손에 주황색 불꽃을 들고 바라보는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          229.5,
+          234.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_overlook",
+      "video": "videos/blender/spring.webm",
+      "request": "소녀와 강아지가 바위 위에서 햇살 비치는 산맥을 바라보는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          384.5,
+          394.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_title",
+      "video": "videos/blender/spring.webm",
+      "request": "SPRING 제목이 화면에 나오는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          418.0,
+          425.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_logo",
+      "video": "videos/blender/sintel.webm",
+      "request": "SINTEL 타이틀 로고가 화면에 나오는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          90.5,
+          98.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_shaman_question",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳에 무슨 일로 왔는지 묻고, 신텔이 누군가를 찾고 있다고 답하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          127.0,
+          140.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_dragon_grab",
+      "video": "videos/blender/sintel.webm",
+      "request": "어른 용이 아기 용을 붙잡아 데려가는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          324.0,
+          336.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.6,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 83.7046754360199,
+      "input_tokens": 191193,
+      "output_tokens": 34130,
+      "tokens": {
+        "input": 64812,
+        "output": 34130,
+        "cache_write": 37627,
+        "cache_read": 88754
+      },
+      "found": [
+        [
+          256.0,
+          266.0
+        ]
+      ],
+      "reasons": [
+        [
+          "토끼가 칼을 들고 뾰족한 나뭇가지를 깎는 장면(약 256.5s, 바닥에 나무 부스러기)에서 시작해, 깎은 막대에 줄과 잎을 묶어 화살·창을 만들고 완성품 3자루가 그루터기에 놓이는 모습(약 265.5s)까지 이어집니다. 약 266.5s에 초록 밧줄 장면으로 넘어갑니다. 구간 내 음성은 모두 음악·BGM입니다."
+        ]
+      ],
+      "case": "bbb_bow_making",
+      "run": 1
+    },
+    {
+      "tiou": 0.6571428571428604,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 132.8067650794983,
+      "input_tokens": 324001,
+      "output_tokens": 58370,
+      "tokens": {
+        "input": 109687,
+        "output": 58370,
+        "cache_write": 53691,
+        "cache_read": 160623
+      },
+      "found": [
+        [
+          447.4,
+          452.0
+        ]
+      ],
+      "reasons": [
+        [
+          "날다람쥐가 나뭇가지 끝을 잡고 아래로 매달려 있고, 그 아래에 뾰족한 나무 말뚝들이 줄지어 있는 장면. 447.9s 프레임에서 이미 매달린 상태가 확인되어 조각 시작(447.4s)부터 해당하며, 452.0s 프레임에서는 가지 위에 올라가 매달린 상태가 끝남."
+        ]
+      ],
+      "case": "bbb_spike_trap",
+      "run": 1
+    },
+    {
+      "tiou": 0.18312988245953077,
+      "recall": 0.2,
+      "precision": 0.25,
+      "segment_count": 4,
+      "seconds": 129.65229105949402,
+      "input_tokens": 291112,
+      "output_tokens": 47515,
+      "tokens": {
+        "input": 88570,
+        "output": 47515,
+        "cache_write": 43647,
+        "cache_read": 158895
+      },
+      "found": [
+        [
+          211.5,
+          214.5
+        ],
+        [
+          401.5,
+          410.5
+        ],
+        [
+          429.5,
+          447.37575
+        ],
+        [
+          482.0,
+          485.5
+        ]
+      ],
+      "reasons": [
+        [
+          "날다람쥐가 나무 근처에서 몸을 수평으로 펴고 보라색 피막(팔다리)을 넓게 펼친 채 풀밭 위 공중을 활공하는 장면이 212초 전후에서 확인됨. 주변 프레임(209~210초, 215초 이후, 283~298초)은 활공 자세가 아니거나 지면에 있어서 제외. 해당 구간 받아쓰기는 음악·노래 구간이라 화면 기준으로 판단함."
+        ],
+        [
+          "날다람쥐가 나뭇가지에서 도약해(약 401.6~402.9초) 팔다리 막을 펴고 공중을 활공하는 장면. 409.5초까지 공중에 떠 있고 412초쯤 나무에 닿는 것으로 보임."
+        ],
+        [
+          "날다람쥐가 팔다리를 벌리고 막을 펴 하늘을 활공하는 장면(약 430초부터 확인). 조각 끝(447.4초)까지 공중에 있으며 착지는 확인되지 않아 조각 경계까지 제출. 다음 조각과 합쳐질 수 있음."
+        ],
+        [
+          "날다람쥐가 팔다리와 날개막을 쫙 펴고 파란 하늘을 활공하는 장면. 483.2초와 484.6초 프레임에서 활공이 확인되고, 481.8초는 얼굴 클로즈업, 485.9초부터는 날다람쥐가 멀리 작게 보여 활공이 식별되지 않음. 음악(BGM) 구간이며 음성은 없음."
+        ]
+      ],
+      "case": "bbb_flying_squirrel",
+      "run": 1
+    },
+    {
+      "tiou": 0.06679661016949205,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 2,
+      "seconds": 132.26705956459045,
+      "input_tokens": 212305,
+      "output_tokens": 35323,
+      "tokens": {
+        "input": 57478,
+        "output": 35323,
+        "cache_write": 38774,
+        "cache_read": 116053
+      },
+      "found": [
+        [
+          230.1,
+          232.0705
+        ],
+        [
+          304.5,
+          329.0
+        ]
+      ],
+      "reasons": [
+        [
+          "소녀가 두 손 위에 주황색 불꽃을 들고 바라보는 장면이 230.1초 무렵부터 이 조각의 끝(232.1초)까지 이어짐. 그 이전(226~230초)의 빛은 청록색이라 제외함. 장면은 조각 끝까지 계속되므로 경계에서 끝냄."
+        ],
+        [
+          "소녀가 두 손으로 지팡이를 잡고 끝에 켜진 주황빛 불꽃을 올려다보거나 바라보는 장면이 약 305초부터 328~329초까지 이어진다. 329초 무렵 불꽃이 꺼지고 소녀가 330초 전후 화면에서 빠진다. 불꽃이 손 위가 아니라 지팡이 끝에 있다는 점은 요청과 약간 다르다."
+        ]
+      ],
+      "case": "spring_flame",
+      "run": 1
+    },
+    {
+      "tiou": 0.4694835680751171,
+      "recall": 1.0,
+      "precision": 0.5,
+      "segment_count": 2,
+      "seconds": 91.82784128189087,
+      "input_tokens": 168155,
+      "output_tokens": 27502,
+      "tokens": {
+        "input": 41041,
+        "output": 27502,
+        "cache_write": 33061,
+        "cache_read": 94053
+      },
+      "found": [
+        [
+          52.0,
+          63.0
+        ],
+        [
+          384.5,
+          394.8
+        ]
+      ],
+      "reasons": [
+        [
+          "소녀와 강아지가 함께 화면에 나오고, 약 61초 무렵 둘이 절벽 가장자리에서 안개 낀 계곡과 산맥을 바라보는 장면이 확인됨. 강아지는 약 63~64초 사이에 사라진다. 다만 햇살이 강하게 비치는 산맥 조망은 뚜렷하지 않고 계곡 안개 장면이 많아, 요청과 완전히 일치하지는 않는 근사 구간이다."
+        ],
+        [
+          "소녀가 지팡이를 들고 바위 위의 강아지와 함께 햇살 비치는 산맥을 바라보는 장면이 약 384.5초부터 394.8초까지 이어짐. 이후 395초쯤 산길을 걷는 장면으로 바뀜. 음악 구간이며 대사는 없음."
+        ]
+      ],
+      "case": "spring_overlook",
+      "run": 1
+    },
+    {
+      "tiou": 0.8235294117647058,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 135.1693983078003,
+      "input_tokens": 212639,
+      "output_tokens": 31441,
+      "tokens": {
+        "input": 70491,
+        "output": 31441,
+        "cache_write": 39136,
+        "cache_read": 103012
+      },
+      "found": [
+        [
+          418.0,
+          426.5
+        ]
+      ],
+      "reasons": [
+        [
+          "화면 중앙에 나무를 깎은 듯한 주황-갈색 'SPRING' 제목 글자가 나타나 약 425.6초까지 보이며, 이후 검은 화면과 크레딧으로 넘어갑니다. 구간 내내 음악(BGM) 구간입니다."
+        ]
+      ],
+      "case": "spring_title",
+      "run": 1
+    },
+    {
+      "tiou": 0.9375,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 113.31471753120422,
+      "input_tokens": 150475,
+      "output_tokens": 23963,
+      "tokens": {
+        "input": 45440,
+        "output": 23963,
+        "cache_write": 33499,
+        "cache_read": 71536
+      },
+      "found": [
+        [
+          90.0,
+          98.0
+        ]
+      ],
+      "reasons": [
+        [
+          "윈도우 10(90~100s)에서 원형 나무 엠블럼과 'SINTEL' 글자로 된 타이틀 로고가 보임. 약 90.0초에 페이드인되어 97.2초경까지 선명하게 유지되다 97.8~98.4초 사이 사라짐."
+        ]
+      ],
+      "case": "sintel_logo",
+      "run": 1
+    },
+    {
+      "tiou": 0.65,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 65.80845212936401,
+      "input_tokens": 98056,
+      "output_tokens": 24470,
+      "tokens": {
+        "input": 29408,
+        "output": 24470,
+        "cache_write": 31255,
+        "cache_read": 37393
+      },
+      "found": [
+        [
+          120.0,
+          140.0
+        ]
+      ],
+      "reasons": [
+        [
+          "받아쓰기상 \"So, what brings you to the land of the gatekeepers?\"(질문, 주술사 목소리로 추정)가 약 120~130초에 나오고, 이어서 신텔의 \"I'm searching for someone. Someone very dear? A kindred spirit?\" 답변이 약 132~139초에 나옵니다. 프레임에서도 답변 시점에 신텔의 입 움직임이 확인됩니다."
+        ]
+      ],
+      "case": "sintel_shaman_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 176.25386714935303,
+      "input_tokens": 411761,
+      "output_tokens": 64326,
+      "tokens": {
+        "input": 93909,
+        "output": 64326,
+        "cache_write": 60128,
+        "cache_read": 257724
+      },
+      "found": [
+        [
+          0.0,
+          0.5
+        ]
+      ],
+      "reasons": [
+        [
+          "placeholder"
+        ]
+      ],
+      "case": "sintel_dragon_grab",
+      "run": 1
+    }
+  ]
+}

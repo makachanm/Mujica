@@ -1,0 +1,146 @@
+[
+  {
+    "name": "anime_ending_song",
+    "video": "videos/anime_ending.webm",
+    "request": "애니메이션 엔딩곡이 나오는 장면",
+    "video_description": "",
+    "language": "ja",
+    "answers": [[0.0, 89.0]]
+  },
+  {
+    "name": "anime_dinosaur",
+    "video": "videos/anime_ending.webm",
+    "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+    "video_description": "",
+    "language": "ja",
+    "answers": [[17.0, 27.0]]
+  },
+  {
+    "name": "anime_rain_puddle",
+    "video": "videos/anime_ending.webm",
+    "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+    "video_description": "",
+    "language": "ja",
+    "answers": [[47.0, 57.0]]
+  },
+  {
+    "name": "ohtani_home_run",
+    "video": "videos/ohtani_nlcs.webm",
+    "request": "오타니 쇼헤이가 홈런을 치는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[65.0, 77.0], [93.0, 107.0]]
+  },
+  {
+    "name": "ohtani_interview_question",
+    "video": "videos/ohtani_nlcs.webm",
+    "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[1.8, 17.8]]
+  },
+  {
+    "name": "ohtani_first_run_answer",
+    "video": "videos/ohtani_nlcs.webm",
+    "request": "오타니가 선발 투수에게 가장 중요한 것은 첫 점수를 주지 않는 것이라고 말하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[36.0, 45.0]]
+  },
+  {
+    "name": "bbb_bow_making",
+    "video": "videos/blender/big_buck_bunny.webm",
+    "request": "토끼가 나뭇가지를 깎아 활과 화살을 만드는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[251.0, 265.0]]
+  },
+  {
+    "name": "bbb_spike_trap",
+    "video": "videos/blender/big_buck_bunny.webm",
+    "request": "날다람쥐가 뾰족한 말뚝 함정 위의 나뭇가지에 매달려 있는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[445.0, 452.0]]
+  },
+  {
+    "name": "bbb_flying_squirrel",
+    "video": "videos/blender/big_buck_bunny.webm",
+    "request": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[424.0, 426.0], [429.0, 431.0], [434.0, 440.0], [482.0, 484.0], [580.5, 596.5]]
+  },
+  {
+    "name": "spring_flame",
+    "video": "videos/blender/spring.webm",
+    "request": "소녀가 두 손에 주황색 불꽃을 들고 바라보는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[229.5, 234.5]]
+  },
+  {
+    "name": "spring_overlook",
+    "video": "videos/blender/spring.webm",
+    "request": "소녀와 강아지가 바위 위에서 햇살 비치는 산맥을 바라보는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[384.5, 394.5]]
+  },
+  {
+    "name": "spring_title",
+    "video": "videos/blender/spring.webm",
+    "request": "SPRING 제목이 화면에 나오는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[418.0, 425.0]]
+  },
+  {
+    "name": "sintel_logo",
+    "video": "videos/blender/sintel.webm",
+    "request": "SINTEL 타이틀 로고가 화면에 나오는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[90.5, 98.0]]
+  },
+  {
+    "name": "sintel_shaman_question",
+    "video": "videos/blender/sintel.webm",
+    "request": "주술사가 신텔에게 이곳에 무슨 일로 왔는지 묻고, 신텔이 누군가를 찾고 있다고 답하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[127.0, 140.0]]
+  },
+  {
+    "name": "sintel_dragon_grab",
+    "video": "videos/blender/sintel.webm",
+    "request": "어른 용이 아기 용을 붙잡아 데려가는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[324.0, 336.5]]
+  },
+  {
+    "name": "sintel_fool_unprepared",
+    "video": "videos/blender/sintel.webm",
+    "request": "주술사가 신텔에게 아무 준비 없이 혼자 다니다니 바보 같다고 말하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[117.5, 124.0]]
+  },
+  {
+    "name": "sintel_good_night",
+    "video": "videos/blender/sintel.webm",
+    "request": "신텔이 아기 용 스케일스에게 잘 자라고 인사하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[227.5, 230.0]]
+  },
+  {
+    "name": "sintel_dragon_lands",
+    "video": "videos/blender/sintel.webm",
+    "request": "주술사가 신텔에게 이곳은 용의 땅이고 생각보다 가까이 왔다고 말하는 장면",
+    "video_description": "",
+    "language": "en",
+    "answers": [[457.5, 462.5]]
+  }
+]

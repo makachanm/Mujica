@@ -1,0 +1,167 @@
+{
+  "code_version": "1dad02c+dirty",
+  "settings": {
+    "ollama_url": "http://gpu-server:11434",
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5",
+    "anthropic_api_key": "",
+    "chunk_count": 4,
+    "window_seconds": 10.0,
+    "frames_per_look": 8,
+    "whisper_server_url": "http://gpu-server:8001",
+    "whisper_model": "deepdml/faster-whisper-large-v3-turbo-ct2",
+    "language": "ja",
+    "detect_songs": true
+  },
+  "overrides": {
+    "agent_model": "claude-sonnet-5-5",
+    "vision_model": "claude-sonnet-5-5",
+    "chunk_count": 4
+  },
+  "cases": [
+    {
+      "name": "bbb_bow_making",
+      "video": "testdata/blender/Big Buck Bunny [YE7VzlLtp-4].webm",
+      "request": "토끼가 나뭇가지를 깎아 활과 화살을 만드는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          251.0,
+          265.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_spike_trap",
+      "video": "testdata/blender/Big Buck Bunny [YE7VzlLtp-4].webm",
+      "request": "날다람쥐가 뾰족한 말뚝 함정 위의 나뭇가지에 매달려 있는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          445.0,
+          452.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_flying_squirrel",
+      "video": "testdata/blender/Big Buck Bunny [YE7VzlLtp-4].webm",
+      "request": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          424.0,
+          426.0
+        ],
+        [
+          429.0,
+          431.0
+        ],
+        [
+          434.0,
+          440.0
+        ],
+        [
+          482.0,
+          484.0
+        ],
+        [
+          580.5,
+          596.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 66.99971652030945,
+      "input_tokens": 73114,
+      "output_tokens": 10632,
+      "tokens": {
+        "input": 26722,
+        "output": 10632,
+        "cache_write": 25466,
+        "cache_read": 20926
+      },
+      "found": [],
+      "reasons": [],
+      "case": "bbb_bow_making",
+      "run": 1
+    },
+    {
+      "tiou": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 0,
+      "seconds": 46.497153759002686,
+      "input_tokens": 71438,
+      "output_tokens": 8844,
+      "tokens": {
+        "input": 26677,
+        "output": 8844,
+        "cache_write": 23718,
+        "cache_read": 21043
+      },
+      "found": [],
+      "reasons": [],
+      "case": "bbb_spike_trap",
+      "run": 1
+    },
+    {
+      "tiou": 0.5816326530612249,
+      "recall": 0.2,
+      "precision": 0.25,
+      "segment_count": 4,
+      "seconds": 73.01848101615906,
+      "input_tokens": 139838,
+      "output_tokens": 16618,
+      "tokens": {
+        "input": 47725,
+        "output": 16618,
+        "cache_write": 31260,
+        "cache_read": 60853
+      },
+      "found": [
+        [
+          403.3,
+          408.0
+        ],
+        [
+          429.7,
+          437.5
+        ],
+        [
+          481.0,
+          486.0
+        ],
+        [
+          580.0,
+          596.5
+        ]
+      ],
+      "reasons": [
+        [
+          "날다람쥐가 도약해 팔다리를 펴고 하늘을 나는 장면"
+        ],
+        [
+          "날다람쥐가 팔다리를 펴고 하늘과 숲 위를 활공하는 장면"
+        ],
+        [
+          "날다람쥐가 팔다리를 펴고 하늘에 떠 있음"
+        ],
+        [
+          "날다람쥐가 팔다리를 펴고 하늘에 떠 있음"
+        ]
+      ],
+      "case": "bbb_flying_squirrel",
+      "run": 1
+    }
+  ]
+}

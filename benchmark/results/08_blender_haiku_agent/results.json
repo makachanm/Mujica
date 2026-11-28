@@ -1,0 +1,502 @@
+{
+  "code_version": "1dad02c+dirty",
+  "agent_model": "claude-haiku-5-5",
+  "cases": [
+    {
+      "name": "bbb_bow_making",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "토끼가 나뭇가지를 깎아 활과 화살을 만드는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          251.0,
+          265.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_spike_trap",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 뾰족한 말뚝 함정 위의 나뭇가지에 매달려 있는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          445.0,
+          452.0
+        ]
+      ]
+    },
+    {
+      "name": "bbb_flying_squirrel",
+      "video": "videos/blender/big_buck_bunny.webm",
+      "request": "날다람쥐가 다리를 펴고 하늘을 활공하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          424.0,
+          426.0
+        ],
+        [
+          429.0,
+          431.0
+        ],
+        [
+          434.0,
+          440.0
+        ],
+        [
+          482.0,
+          484.0
+        ],
+        [
+          580.5,
+          596.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_flame",
+      "video": "videos/blender/spring.webm",
+      "request": "소녀가 두 손에 주황색 불꽃을 들고 바라보는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          229.5,
+          234.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_overlook",
+      "video": "videos/blender/spring.webm",
+      "request": "소녀와 강아지가 바위 위에서 햇살 비치는 산맥을 바라보는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          384.5,
+          394.5
+        ]
+      ]
+    },
+    {
+      "name": "spring_title",
+      "video": "videos/blender/spring.webm",
+      "request": "SPRING 제목이 화면에 나오는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          418.0,
+          425.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_logo",
+      "video": "videos/blender/sintel.webm",
+      "request": "SINTEL 타이틀 로고가 화면에 나오는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          90.5,
+          98.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_shaman_question",
+      "video": "videos/blender/sintel.webm",
+      "request": "주술사가 신텔에게 이곳에 무슨 일로 왔는지 묻고, 신텔이 누군가를 찾고 있다고 답하는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          127.0,
+          140.0
+        ]
+      ]
+    },
+    {
+      "name": "sintel_dragon_grab",
+      "video": "videos/blender/sintel.webm",
+      "request": "어른 용이 아기 용을 붙잡아 데려가는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          324.0,
+          336.5
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.36939313984168887,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 184.66844844818115,
+      "input_tokens": 194118,
+      "output_tokens": 8496,
+      "tokens": {
+        "input": 32,
+        "output": 8496,
+        "cache_write": 24151,
+        "cache_read": 169935
+      },
+      "cost_usd": 0.008969425,
+      "turns": 19,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 37.916667
+        }
+      ],
+      "found": [
+        [
+          243.5,
+          281.4
+        ]
+      ],
+      "answer": "요청한 장면은 1개를 찾았고, `clips/clip_1.mp4`(약 37.9초)로 저장했습니다.\n\n- 장면: 토끼가 나뭇가지를 깎고 줄을 감아 활을 만드는 장면\n- 시작: 243.5초, 끝: 281.4초 (281.4초에 Frank 클로즈업으로 전환)\n\n받아쓰기는 대부분 실패(서버 500 오류)했고 성공한 구간에도 이 장면과 관련된 대사가 없었습니다. 그래서 장면은 프레임을 직접 보고 판단했고, 장면 전환은 ffmpeg 장면 감지로 확인했습니다.\n\n292~298초의 토끼는 완성된 활로 화살을 쏘는 모습이라 깎아서 만드는 장면이 아니므로 제외했습니다.\n\n{\"segments\": [[243.5, 281.4]]}",
+      "case": "bbb_bow_making",
+      "run": 1
+    },
+    {
+      "tiou": 0.8571428571428571,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 66.3395836353302,
+      "input_tokens": 217663,
+      "output_tokens": 7597,
+      "tokens": {
+        "input": 30,
+        "output": 7597,
+        "cache_write": 26110,
+        "cache_read": 191523
+      },
+      "cost_usd": 0.00898048,
+      "turns": 19,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 6.0
+        }
+      ],
+      "found": [
+        [
+          446.0,
+          452.0
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 한 군데였습니다. 날다람쥐가 뾰족한 말뚝 위 나뭇가지에 매달려 있는 장면이 약 446.0초부터 452.0초까지이며, 이를 `clips/clip_1.mp4`(6.0초)로 저장했습니다.\n\n받아쓰기 도구는 대부분 실패하거나 의미 없는 결과를 냈기 때문에 프레임을 직접 보고 장면을 찾았습니다. 말뚝이 보이는 장면은 420초 부근에도 있지만, 그때 날다람쥐는 나뭇가지에 매달려 있지 않았습니다.\n\n{\"segments\": [[446.0, 452.0]]}",
+      "case": "bbb_spike_trap",
+      "run": 1
+    },
+    {
+      "tiou": 0.7712965636731153,
+      "recall": 1.0,
+      "precision": 0.625,
+      "segment_count": 8,
+      "seconds": 125.75940465927124,
+      "input_tokens": 253453,
+      "output_tokens": 14484,
+      "tokens": {
+        "input": 36,
+        "output": 14484,
+        "cache_write": 30484,
+        "cache_read": 222933
+      },
+      "cost_usd": 0.013285429999999999,
+      "turns": 31,
+      "clip_count": 8,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 2.333333
+        },
+        {
+          "name": "clip_2.mp4",
+          "seconds": 2.125
+        },
+        {
+          "name": "clip_3.mp4",
+          "seconds": 1.5
+        },
+        {
+          "name": "clip_4.mp4",
+          "seconds": 2.958333
+        },
+        {
+          "name": "clip_5.mp4",
+          "seconds": 1.875
+        },
+        {
+          "name": "clip_6.mp4",
+          "seconds": 5.041667
+        },
+        {
+          "name": "clip_7.mp4",
+          "seconds": 2.208334
+        },
+        {
+          "name": "clip_8.mp4",
+          "seconds": 15.541667
+        }
+      ],
+      "found": [
+        [
+          408.12,
+          410.42
+        ],
+        [
+          424.33,
+          426.42
+        ],
+        [
+          429.29,
+          430.79
+        ],
+        [
+          430.79,
+          433.71
+        ],
+        [
+          433.71,
+          435.54
+        ],
+        [
+          435.54,
+          440.58
+        ],
+        [
+          481.67,
+          483.83
+        ],
+        [
+          580.92,
+          596.42
+        ]
+      ],
+      "answer": "날다람쥐가 다리를 펴고 활공하는 장면을 8개 구간으로 찾아 `clips` 폴더에 저장했습니다. 음성 받아쓰기는 이 장면과 무관해서, 화면을 직접 확인해 찾았습니다. 컷 전환 시각을 기준으로 잘랐고, 재인코딩해서 프레임 단위로 정확히 잘렸습니다.\n\n- clip_1.mp4: 6:48.12–6:50.42 (처음 날아오르는 장면)\n- clip_2.mp4: 7:04.33–7:06.42 (하늘 활공)\n- clip_3.mp4: 7:09.29–7:10.79 (하늘 활공)\n- clip_4.mp4: 7:10.79–7:13.71 (숲 위를 활공)\n- clip_5.mp4: 7:13.71–7:15.54 (하늘 활공)\n- clip_6.mp4: 7:15.54–7:20.58 (옆으로 활공)\n- clip_7.mp4: 8:01.67–8:03.83 (하늘 활공)\n- clip_8.mp4: 9:40.92–9:56.42 (엔딩 크레딧 배경에서 하늘에 떠 있는 장면)\n\nclip_8은 판단이 애매합니다. 다리를 펴고 하늘에 떠 있는 모습이지만, 활공하는 움직임이라기보다 크레딧 배경에 가깝습니다. 제외해도 된다면 말씀해 주세요.\n\n```json\n{\"segments\": [[408.12, 410.42], [424.33, 426.42], [429.29, 430.79], [430.79, 433.71], [433.71, 435.54], [435.54, 440.58], [481.67, 483.83], [580.92, 596.42]]}\n```",
+      "case": "bbb_flying_squirrel",
+      "run": 1
+    },
+    {
+      "tiou": 0.625,
+      "recall": 1.0,
+      "precision": 0.5,
+      "segment_count": 2,
+      "seconds": 104.53811192512512,
+      "input_tokens": 153166,
+      "output_tokens": 7203,
+      "tokens": {
+        "input": 28,
+        "output": 7203,
+        "cache_write": 23591,
+        "cache_read": 129547
+      },
+      "cost_usd": 0.007848645,
+      "turns": 24,
+      "clip_count": 2,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 5.0
+        },
+        {
+          "name": "clip_2.mp4",
+          "seconds": 3.0
+        }
+      ],
+      "found": [
+        [
+          229.5,
+          234.5
+        ],
+        [
+          312.0,
+          315.0
+        ]
+      ],
+      "answer": "요청에 맞는 장면 2개를 찾아 잘라서 저장했습니다.\n\n- `clips/clip_1.mp4`: 229.5~234.5초 (5초). 소녀가 두 손에 주황색 불꽃을 들고 바라보는 장면입니다.\n- `clips/clip_2.mp4`: 312~315초 (3초). 같은 모습이 다시 나오는 장면입니다.\n\n장면 경계는 0.5초 간격 프레임으로 확인했습니다. 음성 받아쓰기(transcribe.py)는 사용하지 않았습니다. 이 요청은 화면 내용으로 판단하는 것이기 때문입니다.\n\n{\"segments\": [[229.5, 234.5], [312, 315]]}",
+      "case": "spring_flame",
+      "run": 1
+    },
+    {
+      "tiou": 0.7843137254901961,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 90.16292333602905,
+      "input_tokens": 125139,
+      "output_tokens": 5664,
+      "tokens": {
+        "input": 30,
+        "output": 5664,
+        "cache_write": 14045,
+        "cache_read": 111064
+      },
+      "cost_usd": 0.005701265,
+      "turns": 14,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 12.759
+        }
+      ],
+      "found": [
+        [
+          381.79,
+          394.54
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 1개를 찾았습니다. 바위 위에서 강아지와 함께 햇살 비치는 산맥을 바라보는 장면으로, 영상 381.79초~394.54초 구간입니다. 이 장면을 `clips/clip_1.mp4`(약 12.8초, 2048×858)로 저장했습니다.\n\n다음 두 구간은 제외했습니다.\n- 394.54초 이후: 소녀가 강아지와 함께 산길을 걸어가는 장면이라 \"바라보는\" 동작이 아닙니다.\n- 57~77초: 소녀와 강아지가 능선에서 안개 낀 계곡을 내려다보는 장면인데, 햇살이 비치는 산맥 장면은 아닙니다.\n\n{\"segments\": [[381.79, 394.54]]}",
+      "case": "spring_overlook",
+      "run": 1
+    },
+    {
+      "tiou": 0.5,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 75.55974793434143,
+      "input_tokens": 117102,
+      "output_tokens": 5321,
+      "tokens": {
+        "input": 26,
+        "output": 5321,
+        "cache_write": 20381,
+        "cache_read": 96695
+      },
+      "cost_usd": 0.0061776750000000005,
+      "turns": 15,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 3.5
+        }
+      ],
+      "found": [
+        [
+          418.0,
+          421.5
+        ]
+      ],
+      "answer": "SPRING 제목이 화면에 나오는 장면은 하나였고, `clips/clip_1.mp4`(약 3.5초)로 저장했습니다.\n\n- 5초 간격으로 전체 영상을 훑었을 때 SPRING 제목은 약 420초 부근에서만 보였고, 이후 0.5초 간격으로 다시 확인했습니다.\n- 제목 로고가 나타나는 시점은 약 418초, 완전히 사라지는 시점은 약 421.5초로 판단해 그 구간을 잘랐습니다. 경계는 0.5초 간격 샘플에 근거한 것이라 前後 약 0.5초 오차가 있을 수 있습니다.\n- 제목은 화면 글자이므로 받아쓰기 도구는 사용하지 않았습니다.\n\n{\"segments\": [[418.0, 421.5]]}",
+      "case": "spring_title",
+      "run": 1
+    },
+    {
+      "tiou": 0.9466666666666659,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 53.544357776641846,
+      "input_tokens": 103927,
+      "output_tokens": 3990,
+      "tokens": {
+        "input": 24,
+        "output": 3990,
+        "cache_write": 16124,
+        "cache_read": 87779
+      },
+      "cost_usd": 0.00489069,
+      "turns": 17,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 7.125
+        }
+      ],
+      "found": [
+        [
+          90.5,
+          97.6
+        ]
+      ],
+      "answer": "{\"segments\": [[90.5, 97.6]]}",
+      "case": "sintel_logo",
+      "run": 1
+    },
+    {
+      "tiou": 0.8201174743024952,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 52.55329728126526,
+      "input_tokens": 56918,
+      "output_tokens": 5961,
+      "tokens": {
+        "input": 20,
+        "output": 5961,
+        "cache_write": 9388,
+        "cache_read": 47510
+      },
+      "cost_usd": 0.004631100000000001,
+      "turns": 11,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 11.833334
+        }
+      ],
+      "found": [
+        [
+          126.38,
+          138.17
+        ]
+      ],
+      "answer": "조건에 맞는 장면은 1개를 찾았고, `clips/clip_1.mp4`로 저장했습니다. 길이는 약 11.8초입니다.\n\n- **장면 내용:** 주술사가 \"So, what brings you to the land of the gatekeepers?\"라고 묻고, 신텔이 \"I'm searching for someone.\"라고 답합니다.\n- **구간:** 126.38초 ~ 138.17초 (화면 전환 지점 기준)\n- **참고:** 이 장면 직후에 나오는 \"Someone very dear? A kindred spirit? A dragon?\"는 주술사의 되물음으로 보여서 제외했습니다. 답변 이후 화면이 바뀌는 138.17초에서 끊었습니다. 경계 판단은 대화와 화면 전환 기준의 추정이니, 필요하면 앞뒤를 직접 확인해 주세요.\n- **검색 한계:** 300~375초, 375~450초, 600~675초, 675~750초 구간은 받아쓰기 서버가 500 오류를 반환해 텍스트를 확인하지 못했습니다. 대부분 말소리가 없는 구간으로 보이지만, 그 구간에 같은 대사가 있을 가능성은 완전히 배제하지 못했습니다.\n\n{\"segments\": [[126.38, 138.17]]}",
+      "case": "sintel_shaman_question",
+      "run": 1
+    },
+    {
+      "tiou": 0.42675159235668747,
+      "recall": 0.0,
+      "precision": 0.0,
+      "segment_count": 1,
+      "seconds": 168.949383020401,
+      "input_tokens": 492813,
+      "output_tokens": 12097,
+      "tokens": {
+        "input": 44,
+        "output": 12097,
+        "cache_write": 40841,
+        "cache_read": 451928
+      },
+      "cost_usd": 0.015677305,
+      "turns": 30,
+      "clip_count": 1,
+      "clips": [
+        {
+          "name": "clip_1.mp4",
+          "seconds": 9.916667
+        }
+      ],
+      "found": [
+        [
+          320.8,
+          330.7
+        ]
+      ],
+      "answer": "요청에 맞는 장면은 하나만 찾았고, `clips/clip_1.mp4`로 저장했습니다(약 320.8초~330.7초, 길이 9.9초).\n\n- 이 구간은 큰 황갈색 용이 작은 용(Scales)을 발톱으로 붙잡아 도시 위로 데려가는 장면입니다. 화면 전환이 Sintel 쪽으로 넘어가는 약 330.7초에서 끝나도록 잘랐습니다.\n- 이 장면에는 대사가 거의 없어서 받아쓰기 결과로는 찾지 못했고, 프레임 확인으로 찾았습니다. 시작·끝 시각은 프레임을 0.25~0.5초 간격으로 보고 정한 값이라 몇 프레임 정도 오차가 있을 수 있습니다.\n- 전체 영상을 5초 간격으로 훑었을 때 다른 후보는 보이지 않았습니다.\n\n{\"segments\": [[320.8, 330.7]]}",
+      "case": "sintel_dragon_grab",
+      "run": 1
+    }
+  ]
+}

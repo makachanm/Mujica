@@ -1,0 +1,140 @@
+{
+  "code_version": "1dad02c+dirty",
+  "agent_model": "claude-sonnet-5-5",
+  "cases": [
+    {
+      "name": "anime_dinosaur",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 공룡 옷을 입고 있는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          17.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "name": "anime_rain_puddle",
+      "video": "testdata/testdata1.webm",
+      "request": "캐릭터가 비 오는 웅덩이를 내려다보는 장면",
+      "video_description": "",
+      "language": "ja",
+      "answers": [
+        [
+          47.0,
+          57.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_home_run",
+      "video": "testdata/testdata2.webm",
+      "request": "오타니 쇼헤이가 홈런을 치는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          65.0,
+          77.0
+        ],
+        [
+          93.0,
+          107.0
+        ]
+      ]
+    },
+    {
+      "name": "ohtani_interview_question",
+      "video": "testdata/testdata2.webm",
+      "request": "기자가 오타니에게 4차전에서 몸 상태를 어디까지 끌어올릴 수 있는지 묻는 장면",
+      "video_description": "",
+      "language": "en",
+      "answers": [
+        [
+          1.8,
+          17.8
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "tiou": 0.9333333333333333,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 18.13557457923889,
+      "cost_usd": 0.0251088,
+      "turns": 6,
+      "found": [
+        [
+          16.5,
+          26.8
+        ]
+      ],
+      "answer": "캐릭터가 공룡 옷을 입고 있는 장면은 한 군데로, 약 16.5초부터 26.8초까지입니다.\n\n영상을 5초 간격으로 훑어서 공룡 옷 장면이 있는 구간을 찾았습니다. 그다음 10~30초 구간을 1초 간격으로 뽑아 경계를 확인했습니다. 시작과 끝은 1초 간격 프레임으로 본 값이라 약 0.5초 정도 오차가 있을 수 있습니다.\n\n- **시작:** 16초 프레임은 아직 파란 배경의 카페 장면이고, 17초 프레임부터 공룡 옷 장면입니다.\n- **끝:** 26초 프레임까지 공룡 옷을 입고 있고, 27초 프레임부터는 청록색 배경의 다른 장면입니다.\n\n{\"segments\": [[16.5, 26.8]]}",
+      "case": "anime_dinosaur",
+      "run": 1
+    },
+    {
+      "tiou": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 15.784002542495728,
+      "cost_usd": 0.0186376,
+      "turns": 6,
+      "found": [
+        [
+          47.0,
+          57.0
+        ]
+      ],
+      "answer": "캐릭터가 비 오는 웅덩이를 내려다보는 장면은 약 47초부터 57초까지입니다. 3초 간격으로 뽑은 프레임으로 대략의 위치를 잡은 뒤, 44~58초를 1초 간격으로 다시 확인해 경계를 정했습니다.\n\n- 46초 프레임은 어두운 빈 화면이고, 웅덩이는 47초 프레임에서 처음 보입니다.\n- 웅덩이 모습은 56초 프레임까지 이어지고, 57초 프레임에서는 우산 쓴 장면으로 넘어가는 장면이 나옵니다.\n- 영상 전체(90초)를 3초 간격으로 훑었을 때 이 요청에 맞는 장면은 이 구간뿐이었습니다.\n\n{\"segments\": [[47, 57]]}",
+      "case": "anime_rain_puddle",
+      "run": 1
+    },
+    {
+      "tiou": 0.7592592592592593,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 2,
+      "seconds": 39.37863254547119,
+      "cost_usd": 0.0542551,
+      "turns": 9,
+      "found": [
+        [
+          65.5,
+          72.0
+        ],
+        [
+          92.0,
+          107.0
+        ]
+      ],
+      "answer": "Ohtani가 홈런을 치는 장면은 두 군데 찾았습니다. 홈런 타구 장면은 따로 확인하지 못했습니다. 경계 시각은 1초 간격 프레임으로 본 추정치라 1~2초쯤 어긋날 수 있습니다.\n\n- **첫 번째, 약 65.5~72초:** 타석에 선 Ohtani가 스윙하고 베이스를 도는 장면입니다.\n- **두 번째, 약 92~107초:** 타석, 스윙, 타구가 날아가는 장면, 베이스를 도는 모습이 이어집니다. 이어서 전광판의 \"HOME RUN\" 표시와 더그아웃 반응까지 나옵니다.\n\n받아쓰기 결과에는 홈런을 직접 말하는 대사가 없었습니다. 그래서 위 시각은 모두 화면을 보고 판단했습니다.\n\n{\"segments\": [[65.5, 72], [92, 107]]}",
+      "case": "ohtani_home_run",
+      "run": 1
+    },
+    {
+      "tiou": 0.9411764705882353,
+      "recall": 1.0,
+      "precision": 1.0,
+      "segment_count": 1,
+      "seconds": 9.976476907730103,
+      "cost_usd": 0.0091497,
+      "turns": 3,
+      "found": [
+        [
+          1.7,
+          18.7
+        ]
+      ],
+      "answer": "Question runs ~1.7–18.7; check start frame quickly? Accept.\n\n내용상 기자가 질문하는 구간은 약 1.7초~18.7초입니다. 이 구간에서 기자가 오타니에게 4차전을 위해 몸을 어디까지 준비했는지, 포스트시즌이라 얼마나 더 끌어올릴 수 있는지 묻습니다. 영상 프레임은 확인하지 않았고 음성 받아쓰기의 시각만 근거로 했습니다.\n\n{\"segments\": [[1.7, 18.7]]}",
+      "case": "ohtani_interview_question",
+      "run": 1
+    }
+  ]
+}
