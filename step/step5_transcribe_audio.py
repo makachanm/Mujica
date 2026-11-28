@@ -24,9 +24,10 @@ TAIL_PAD_SECONDS = 5.0
 
 # 무음 처리하고 남은 소리가 이보다 짧으면 서버에 보내지 않는다.
 MIN_AUDIBLE_SECONDS = 1.0
-# speaches 0.8.3 은 30초 이상인 오디오에 말소리가 없으면 500 을 낸다 (무음, 노래만 있는 구간 등).
-# 500 이 나면 반씩 나눠 다시 요청하고, 이 길이보다 짧아져도 실패하면 그 부분은 건너뛴다.
-MIN_SPLIT_SECONDS = 20.0
+# speaches 0.8.3 은 30초 넘는 오디오에서 VAD 가 말소리를 못 찾으면 500 을 낸다 (무음, 노래만 있는 구간 등).
+# 30초 이하 오디오는 이 경로를 타지 않으므로, 500 이 나면 이 길이 이하가 될 때까지 반씩 나눠 다시 요청한다.
+# 이 길이 이하에서도 실패하면 그 부분은 건너뛴다.
+RETRY_PIECE_SECONDS = 20.0
 
 SONG_MARKS = {"singing": "(노래 구간)", "music": "(음악·BGM 구간)"}
 
@@ -166,7 +167,7 @@ def transcribe_piece(video_path, start, end, work_dir, whisper_server, mute, nam
     except WhisperServerError as error:
         if error.status_code != 500:
             raise
-        if end - start < MIN_SPLIT_SECONDS * 2:
+        if end - start <= RETRY_PIECE_SECONDS:
             print(f"[받아쓰기] 경고: {start:.1f}~{end:.1f}초 받아쓰기 실패 (500), 건너뜀", file=sys.stderr)
             return []
         middle = (start + end) / 2
