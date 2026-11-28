@@ -109,9 +109,13 @@ async def find_candidates(video_path, video_description, request_text, *option_v
         yield latest_progress["text"], [], ""
         await asyncio.sleep(PROGRESS_REFRESH_SECONDS)
 
-    segments = search.result()
+    segments, tokens = search.result()
     gallery_items, report = show_candidates(request_text, segments)
-    yield f"후보 {len(segments)}개", gallery_items, report
+    status = f"후보 {len(segments)}개"
+    used_tokens = sum(tokens.values())
+    if used_tokens > 0:
+        status += f" · Claude 토큰 {used_tokens:,}"
+    yield status, gallery_items, report
 
 
 def save_settings(*option_values):

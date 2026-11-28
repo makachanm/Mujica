@@ -18,12 +18,14 @@ settings
 고유명사 사전은 glossary.json 에서 읽어 영상 배경에 같이 넣는다. 없으면 쓰지 않는다 (step6 describe_glossary 참고).
 
 report_progress(문장, 끝났는지) 는 진행 상황을 받는 비동기 함수다.
+find_moments 는 (찾은 구간 목록, Claude 토큰 사용량) 을 돌려준다. Ollama 모델만 쓰면 사용량은 모두 0 이다.
 """
 
 import asyncio
 import tempfile
 from pathlib import Path
 
+from claude_model import ClaudeModel
 from step.step1_probe_video import probe_video
 from step.step2_split_timeline import split_timeline
 from step.step4_extract_frames import extract_frames
@@ -89,4 +91,14 @@ async def find_moments(user_request, video_description, video_path, settings, ou
     await asyncio.to_thread(cut_clips, video_path, segments, output_dir)
 
     await report_progress("완료", True)
-    return segments
+    return segments, count_tokens([agent_model, vision_model])
+
+
+def count_tokens(models):
+    total = {"input": 0, "output": 0, "cache_write": 0, "cache_read": 0}
+    for model in models:
+        if not isinstance(model, ClaudeModel):
+            continue
+        for name in total:
+            total[name] += model.usage[name]
+    return total

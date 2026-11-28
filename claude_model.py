@@ -34,6 +34,8 @@ def has_api_key():
 class ClaudeModel:
     def __init__(self, model_name, api_key):
         self.model_name = model_name
+        # 이 모델로 쓴 토큰 합계. 평가 기록에 남긴다.
+        self.usage = {"input": 0, "output": 0, "cache_write": 0, "cache_read": 0}
         if api_key != "":
             self.client = anthropic.AsyncAnthropic(api_key=api_key)
             return
@@ -41,6 +43,12 @@ class ClaudeModel:
         if not has_api_key():
             raise RuntimeError(f"{model_name} 를 쓰려면 옵션의 Claude API 키 칸을 채워 주세요.")
         self.client = anthropic.AsyncAnthropic()
+
+    def count_usage(self, usage):
+        self.usage["input"] += usage.input_tokens or 0
+        self.usage["output"] += usage.output_tokens or 0
+        self.usage["cache_write"] += usage.cache_creation_input_tokens or 0
+        self.usage["cache_read"] += usage.cache_read_input_tokens or 0
 
     def request_options(self, effort):
         options = {"model": self.model_name, "output_config": {"effort": effort}}
@@ -61,6 +69,7 @@ class ClaudeModel:
             messages=[{"role": "user", "content": content}],
             **self.request_options(VISION_EFFORT),
         )
+        self.count_usage(response.usage)
         if response.stop_reason == "refusal":
             return "비전 모델이 이 프레임에 대한 답을 거절했습니다."
         return "\n".join(block.text for block in response.content if block.type == "text")
@@ -79,5 +88,6 @@ class ClaudeModel:
             **self.request_options(AGENT_EFFORT),
         )
         async for message in runner:
+            self.count_usage(message.usage)
             if message.stop_reason == "refusal":
                 break
