@@ -11,6 +11,7 @@ DEFAULT_OPTIONS = {
     "ollama_url": "http://localhost:11434",
     "agent_model": "qwen3:8b",
     "vision_model": "qwen2.5vl:7b",
+    "anthropic_api_key": "",
     "chunk_count": 4,
     "window_seconds": 10.0,
     "frames_per_look": 8,

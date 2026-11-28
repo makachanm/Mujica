@@ -57,10 +57,10 @@ SYSTEM_PROMPT = """\
 """
 
 
-def create_model(model_name, ollama_url):
+def create_model(model_name, ollama_url, anthropic_api_key):
     """모델 이름이 claude- 로 시작하면 Claude API, 아니면 Ollama 모델을 만든다."""
     if model_name.startswith("claude-"):
-        return ClaudeModel(model_name)
+        return ClaudeModel(model_name, anthropic_api_key)
     return ChatOllama(model=model_name, base_url=ollama_url, num_ctx=OLLAMA_CONTEXT_LENGTH)
 
 

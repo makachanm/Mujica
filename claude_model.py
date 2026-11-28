@@ -2,7 +2,7 @@
 Claude API 로 서브에이전트와 비전 모델을 돌린다.
 
 옵션의 에이전트 모델이나 비전 모델 이름이 claude- 로 시작하면 Ollama 대신 이쪽을 쓴다.
-API 키는 ANTHROPIC_API_KEY 환경 변수에서 읽는다 (run.sh 가 .env 를 읽어 넣어 준다).
+API 키는 옵션(options.json)에 적은 값을 쓰고, 비어 있으면 ANTHROPIC_API_KEY 환경 변수(.env)를 쓴다.
 """
 
 import os
@@ -32,13 +32,14 @@ def has_api_key():
 
 
 class ClaudeModel:
-    def __init__(self, model_name):
-        if not has_api_key():
-            raise RuntimeError(
-                f"{model_name} 를 쓰려면 Claude API 키가 필요합니다. "
-                "Mujica 폴더의 .env 파일에 ANTHROPIC_API_KEY=sk-ant-... 를 적고 run.sh 로 다시 실행하세요."
-            )
+    def __init__(self, model_name, api_key):
         self.model_name = model_name
+        if api_key != "":
+            self.client = anthropic.AsyncAnthropic(api_key=api_key)
+            return
+
+        if not has_api_key():
+            raise RuntimeError(f"{model_name} 를 쓰려면 옵션의 Claude API 키 칸을 채워 주세요.")
         self.client = anthropic.AsyncAnthropic()
 
     def request_options(self, effort):

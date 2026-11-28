@@ -6,6 +6,7 @@ settings
     ollama_url          Ollama 서버 주소
     agent_model         서브에이전트 모델 (도구 호출 지원). claude- 로 시작하면 Claude API 를 쓴다
     vision_model        프레임을 보고 답하는 모델 (이미지 입력 지원). claude- 로 시작하면 Claude API 를 쓴다
+    anthropic_api_key   Claude API 키. 비어 있으면 ANTHROPIC_API_KEY 환경 변수(.env)를 쓴다
     chunk_count         영상을 나눌 조각 수 = 서브에이전트 수
     window_seconds      대표 프레임 한 장이 맡는 시간(초)
     frames_per_look     에이전트가 한 번에 볼 수 있는 프레임 수
@@ -60,8 +61,8 @@ async def find_moments(user_request, video_description, video_path, settings, ou
     background_text = describe_background(video_description, GLOSSARY_PATH)
 
     whisper_server = WhisperServer(settings["whisper_server_url"], settings["whisper_model"], settings["language"])
-    agent_model = create_model(settings["agent_model"], settings["ollama_url"])
-    vision_model = create_model(settings["vision_model"], settings["ollama_url"])
+    agent_model = create_model(settings["agent_model"], settings["ollama_url"], settings["anthropic_api_key"])
+    vision_model = create_model(settings["vision_model"], settings["ollama_url"], settings["anthropic_api_key"])
 
     with tempfile.TemporaryDirectory(prefix="mujica_") as work_dir:
         # 조각을 하나 준비하는 대로 그 조각의 에이전트를 출발시켜서,

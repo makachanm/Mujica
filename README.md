@@ -16,5 +16,5 @@ Agents read the transcript and frames of a video and return the parts that match
 ./run.sh     # opens the UI at http://127.0.0.1:7860
 ```
 
-To use the Claude API, enter a model name starting with `claude-` and put `ANTHROPIC_API_KEY=...` in `.env`.
+To use the Claude API, enter a model name starting with `claude-` and your API key in the options.
 See [docs/qwen-vs-claude.md](docs/qwen-vs-claude.md) for a comparison.

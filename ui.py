@@ -31,6 +31,7 @@ def collect_settings(option_values):
         "ollama_url": raw["ollama_url"].strip(),
         "agent_model": raw["agent_model"].strip(),
         "vision_model": raw["vision_model"].strip(),
+        "anthropic_api_key": raw["anthropic_api_key"].strip(),
         "chunk_count": int(raw["chunk_count"]),
         "window_seconds": float(raw["window_seconds"]),
         "frames_per_look": int(raw["frames_per_look"]),
@@ -151,6 +152,11 @@ def build_options_panel():
         with gr.Row():
             agent_model = gr.Textbox(label="에이전트 모델", value=initial["agent_model"])
             vision_model = gr.Textbox(label="비전 모델", value=initial["vision_model"])
+        anthropic_api_key = gr.Textbox(
+            label="Claude API 키 (모델 이름이 claude- 로 시작할 때)",
+            type="password",
+            value=initial["anthropic_api_key"],
+        )
         agent_count = gr.Slider(
             label="에이전트 수",
             minimum=1, maximum=16, step=1,
@@ -190,7 +196,7 @@ def build_options_panel():
         )
 
         option_inputs = [
-            ollama_url, agent_model, vision_model,
+            ollama_url, agent_model, vision_model, anthropic_api_key,
             agent_count, window_seconds, frames_per_look,
             whisper_server_url, whisper_model, language,
             detect_songs,
