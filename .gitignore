@@ -4,3 +4,4 @@ outputs/
 options.json
 glossary.json
 .env
+testdata/
